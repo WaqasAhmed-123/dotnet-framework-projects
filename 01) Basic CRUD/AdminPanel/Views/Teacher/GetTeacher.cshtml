@@ -1,0 +1,157 @@
+﻿@model IEnumerable<AdminPanel.Models.Teacher>
+
+@{
+    ViewBag.Title = "GetTeacher";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+
+
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                    <li><a data-action="reload"></a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+            <div class="datatable-header">
+                <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                    <label><span>Filter:</span> <input type="search" class="" placeholder="Type to filter..." aria-controls="DataTables_Table_0"></label>
+                </div>
+
+                <div class="dataTables_length" id="DataTables_Table_0_length">
+                    <label>
+                        <span>Show:</span>
+                        <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+
+                        @{
+                            int c = 0;
+                            foreach (var count in Model)
+                            {
+                                c++;
+                            }
+                        }
+
+                        <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;">
+                            <span class="selection">
+                                <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-xs-container">
+                                    <span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-xs-container" title="5">@c</span>
+                                    <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                                </span>
+                            </span>
+                            <span class="dropdown-wrapper" aria-hidden="true"></span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <h5 class="text-center"><u>Teachers' Record</u></h5>
+
+        </div>
+
+        <table class="table datatable-basic dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+
+            <thead>
+                <tr role="row">
+                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending">
+                        First Name
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending">
+                        Last Name
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">
+                        E-mail
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">
+                        Age
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">
+                        Address
+                    </th>
+                    <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+                        Actions
+                    </th>
+
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr role="row" class="odd">
+
+                    <td class="sorting_1">
+                        @item.Fname
+                    </td>
+                    <td>
+                        @item.Lname
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.Age
+                    </td>
+                    <td class="sorting_1">
+                        @item.Address
+                    </td>
+
+                    <td class="text-center">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="@Url.Action("EditTeacher", "Teacher", new { id = item.Id })"><i class="icon-pencil"></i> Edit</a></li>
+                                    <li><a href="@Url.Action("DeleteTeacher", "Teacher", new { id = item.Id })"><i class="icon-database-remove"></i> Delete</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+        
+        <div class="datatable-footer">
+            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                Showing @c entries
+            </div>
+
+            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+
+                <a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">
+                    ←
+                </a>
+
+                <span>
+                    <a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">
+                        1
+                    </a>
+
+                    <a class="paginate_button " aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">
+                        2
+                    </a>
+                </span>
+
+                <a class="paginate_button next" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" id="DataTables_Table_0_next">
+                    →
+                </a>
+            </div>
+        </div>
+    </div>

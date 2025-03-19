@@ -1,0 +1,129 @@
+﻿@using WebApplication1.Helping_Classes
+@{
+    ViewBag.Title = "Add New User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ 
+    var roles = Enum.GetValues(typeof(EnumRole)).Cast<EnumRole>().Select(v => (int)v).ToArray();
+}
+
+<div class="p-20">
+
+    <div class="row">
+        <form action="@Url.Action("PostAddUser", "Home")" method="post">
+
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h2 class="panel-title text-center text-bold">New User</h2>
+                        </div>
+
+                        <div class="panel-body">
+                            <legend class="text-bold text-uppercase"><span class="text-danger">*</span> Fields are mandatory to fill</legend>
+
+
+                            <div class="form-group">
+                                <label class="text-bold">First Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" required name="FirstName" placeholder="Enter First Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-bold">Last Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" required name="LastName" placeholder="Enter Last Name">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="text-bold">D.O.B <span class="text-danger">*</span></label>
+                                <input type="date" name="Dob" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-bold">Contact <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="Contact" placeholder="Enter User Contact Number" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-bold">Address <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="Address" placeholder="Enter User Address" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-bold">Email <span class="text-danger">*</span></label>
+                                <input type="email" name="Email" class="form-control" onkeyup="validateEmail(this.value)" placeholder="Add Email Here" required>
+                                <span class="text-danger" id="emailErrMsg"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-bold">Gender <span class="text-danger">*</span></label>
+                                <br />
+                                <label><input type="radio" name="Gender" value="Male" required /> Male</label>
+                                &nbsp;
+                                &nbsp;
+                                <label><input type="radio" name="Gender" value="Femal" required /> Female</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-bold">Role <span class="text-danger">*</span></label>
+                                <select class="form-control" name="Role" required>
+                                    <option value="">-- Select Role --</option>
+                                    @foreach (var i in roles)
+                                    {
+                                        <option value="@i">@Enum.GetName(typeof(EnumRole), i)</option>
+                                    }
+                                </select>
+                            </div>
+
+
+                            <div class="text-right">
+                                <button type="submit" id="subBtn" class="btn btn-primary">Add <i class="icon-database-insert position-right"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+    function validateEmail(email) {
+        if (email != "") {
+            $.ajax({
+                type: 'POST',
+                url: "../Ajax/ValidateEmail",
+                dataType: "json",
+                data: {
+                    role:2, email: email, id: -1
+                },
+                success: function (response) {
+                    if (response == true) {
+                        $('#emailErrMsg').text("");
+                        $('#subBtn').attr('disabled', false);
+                    }
+                    else {
+                        $('#emailErrMsg').text("Duplicate Email");
+                        $('#subBtn').attr('disabled', true);
+                    }
+                },
+                error: function () {
+                    $('#emailErrMsg').text("");
+                    $('#subBtn').attr('disabled', false);
+                    alert("Ajax failed");
+                }
+            });
+        }
+
+    }
+</script>
+
+<script>
+    //Used to handle Sidebar links Activeness
+    $("#adminManageusr1").addClass('active');
+
+</script>

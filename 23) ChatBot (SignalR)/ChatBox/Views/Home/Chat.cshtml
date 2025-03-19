@@ -1,0 +1,650 @@
+﻿@using ChatBox.Models;
+@using ChatBox.BL;
+@{
+    //Get the current claims principal
+    var identity = (System.Security.Claims.ClaimsPrincipal)System.Threading.Thread.CurrentPrincipal;
+    var id = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Select(c => c.Value).SingleOrDefault();
+
+    User loggedInUser = new UserBL().GetUserById(Convert.ToInt32(id));
+}
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: #7F7FD5;
+            background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+            background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+        }
+
+        .chat {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .card {
+            height: 500px;
+            border-radius: 15px !important;
+            background-color: rgba(0,0,0,0.4) !important;
+        }
+
+        .msg_card_body {
+            overflow-y: auto;
+        }
+
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+            border-bottom: 0 !important;
+        }
+
+        .card-footer {
+            border-radius: 0 0 15px 15px !important;
+            border-top: 0 !important;
+        }
+
+
+        .type_msg {
+            background-color: rgba(0,0,0,0.3) !important;
+            border: 0 !important;
+            color: white !important;
+            height: 60px !important;
+            overflow-y: auto;
+        }
+
+            .type_msg:focus {
+                box-shadow: none !important;
+                outline: 0px !important;
+            }
+
+        .attach_btn {
+            border-radius: 15px 0 0 15px !important;
+            background-color: rgba(0,0,0,0.3) !important;
+            border: 0 !important;
+            color: white !important;
+            cursor: pointer;
+        }
+
+        .send_btn {
+            border-radius: 0 15px 15px 0 !important;
+            background-color: rgba(0,0,0,0.3) !important;
+            border: 0 !important;
+            color: white !important;
+            cursor: pointer;
+        }
+
+
+
+        .user_img {
+            height: 70px;
+            width: 70px;
+            border: 1.5px solid #f5f6fa;
+            padding: 5px;
+            color: white;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .img_cont {
+            position: relative;
+            height: 70px;
+            width: 70px;
+        }
+
+        .img_cont_msg {
+            height: 40px;
+            width: 40px;
+        }
+
+
+        .user_info {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 15px;
+        }
+
+            .user_info span {
+                font-size: 20px;
+                color: white;
+            }
+
+            .user_info p {
+                font-size: 10px;
+                color: rgba(255,255,255,0.6);
+            }
+
+        .video_cam {
+            margin-left: 50px;
+            margin-top: 5px;
+        }
+
+        .msg_cotainer {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 10px;
+            border-radius: 25px;
+            background-color: #82ccdd;
+            padding: 10px;
+            position: relative;
+        }
+
+
+
+        .msg_time {
+            position: absolute;
+            left: 0;
+            bottom: -15px;
+            color: rgba(255,255,255,0.5);
+            font-size: 10px;
+            width: 150px;
+        }
+
+
+        .msg_cotainer_send {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-right: 10px;
+            border-radius: 25px;
+            background-color: #78e08f;
+            padding: 10px;
+            position: relative;
+        }
+
+        .msg_time_send {
+            position: absolute;
+            right: 0;
+            bottom: -15px;
+            color: rgba(255,255,255,0.5);
+            font-size: 10px;
+            width: 70px;
+        }
+
+        .msg_head {
+            position: relative;
+        }
+
+        #action_menu_btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <input type="hidden" id="LoggedInUserId" value="@loggedInUser.Id" />
+    <input type="hidden" id="ReceiverId" value="@ViewBag.ReceiverId" />
+    <input type="hidden" id="SenderId" value="@ViewBag.SenderId" />
+
+
+
+    <!--Option Chat Message Modal-->
+    <div class="modal" id="OptionModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">Please Select option</h4>
+                </div>
+
+                <center class="modal-body">
+                    <button class="btn btn-primary d-flex" id="optUpdateModal">Update Message</button>
+                    <br />
+                    <button class="btn btn-danger d-flex" id="optDeleteModal">Delete Message</button>
+                </center>
+
+                <!-- Modal footer -->
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="optCancelModal">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--Option Chat Message Modal-->
+
+
+    <!--Update Chat Message Modal-->
+    <div class="modal" id="UpdateModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">Update Message</h4>
+                </div>
+
+                <center class="modal-body">
+                    <input type="hidden" id="updIdModal" class="form-control"/>
+                    <input type="text" id="updMessageModal" class="form-control" placeholder="Your Message"/>
+                </center>
+
+                <!-- Modal footer -->
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-success" id="updDoneModal">Update</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="updCancelModal">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--Update Chat Message Modal-->
+
+
+    <!--Dlete Chat Message Modal-->
+    <div class="modal" id="DeleteModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">Delete Message?</h4>
+                </div>
+
+                <input type="hidden" id="chatIdModal" />
+
+                <!-- Modal footer -->
+                <div class="modal-footer text-center">
+                    <a class="btn btn-primary" id="proceed">Yes</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="delCancelModal">No</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--Dlete Chat Message Modal-->
+
+
+
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center h-100">
+
+            <div class="col-md-8 col-xl-6 chat">
+                <div class="card">
+
+
+                    <div class="card-header msg_head">
+                        <div class="d-flex bd-highlight">
+                            <div class="" style="margin-top:15px;">
+
+                                <span class="rounded-circle user_img">@loggedInUser.Name</span>
+                            </div>
+                            <div class="user_info">
+                                <span>Chat with @ViewBag.ReceiverName</span>
+                                <p id="msgCount">0 Message</p>
+                            </div>
+                            <div class="video_cam">
+                                <a href="@Url.Action("index","Home")" style="color:white; font-size:1.9em"><i class="fa fa-address-book" title="Back to Contacts"></i></a>
+
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Logout", "Auth")" id="action_menu_btn"><i class="fa fa-power-off" title="Sign Out"></i></a>
+
+                    </div>
+
+
+
+                    <div class="card-body msg_card_body" id="cardbody">
+
+                        @*<div class="d-flex justify-content-start mb-4">
+
+                                <div class="img_cont_msg">
+                                    <i class="fa fa-bars" style="font-size:2em; margin-top:7px;"></i>
+                                </div>
+
+                                <div class="msg_cotainer">
+                                    Hi, how are you samim?
+                                    <span class="msg_time">8:40 AM, Today</span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="d-flex justify-content-end mb-4">
+
+                                <div class="msg_cotainer_send">
+                                    Hi Khalid i am good tnx how about you?
+                                    <span class="msg_time_send">8:55 AM, Today</span>
+                                </div>
+
+                                <div class="img_cont_msg">
+                                    <i class="fa fa-bars" style="font-size:2em; margin-top:4px;"></i>
+                                </div>
+
+                            </div>*@
+
+                    </div>
+
+
+
+
+                    <div class="card-footer">
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <span class="input-group-text attach_btn"><i class="fa fa-times" onclick="clearText()" title="Clear text?"></i></span>
+                            </div>
+                            <textarea name="Message" class="form-control type_msg" placeholder="Type your message..." id="message"></textarea>
+                            <div class="input-group-append">
+                                <span class="input-group-text send_btn"><i class="fas fa-location-arrow" id="sendmessage" title="Send Message"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        var rid = $('#ReceiverId').val();
+        var sid = $('#SenderId').val();
+        var lid = $('#LoggedInUserId').val();
+
+        window.onload = function ()
+        {
+            GetChatCount();
+            GetChat();
+            ClearUnreadChat();
+        };
+
+        function GetChat()  //Get chat messages of users (sender and receiver)
+        {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: '@Url.Action("GetChat", "Home")',
+                data: { SenderId: sid, ReceiverId: rid },
+                success: function (response)
+                {
+                    $('#discussion').empty(); //clearing previous tags inside div to append new data
+
+                    var i = 0;
+                    $.each(response, function ()
+                    {
+                        if (response[i].SenderId == lid)
+                        {
+                            $("#cardbody").append('<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + response[i].Message + '<span class="msg_time_send">Sent By: You</span></div><div class="img_cont_msg"><i onclick="optionModal(' + response[i].Id + ')" class="fa fa-bars" style="font-size:2em; margin-top:4px;"></i></div></div>');
+                        }
+                        else
+                        {
+                            $("#cardbody").append('<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><i onclick="deleteModal(' + response[i].Id + ')" class="fa fa-bars" style="font-size:2em; margin-top:7px;"></i></div><div class="msg_cotainer">' + response[i].Message + '<span class="msg_time">Sent By: ' + response[i].SenderName + '</span></div></div>');
+                        }
+
+                        i++;
+                    });
+
+                },
+                error: function (response)
+                {
+                    alert('Ajax List Error');
+                }
+
+            });
+
+        }
+
+
+        function GetChatCount()
+        {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: '@Url.Action("GetChatCount", "Home")',
+                data: { SenderId: sid, ReceiverId: rid },
+                success: function (response)
+                {
+                    $("#msgCount").text(response + " Messages");
+                },
+                error: function (response)
+                {
+                    alert('Ajax Count Error');
+                }
+
+            });
+
+        }
+
+
+        function ClearUnreadChat() //it will clear all unread messages
+        {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: '@Url.Action("GetClearUnreadChat", "Home")',
+                data: { SenderId: rid},
+                success: function (response)
+                {
+                    if (response == "0")
+                    {
+                        alert("Something Wrong, Please reload the page");
+                    }
+                },
+                error: function (response)
+                {
+                    alert('Ajax Clear Count Error');
+                }
+
+            });
+
+        }
+
+    </script>
+
+
+
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+
+        $(function ()
+        {
+            var chat = $.connection.chatHub; //get connection with class named "ChatHub" in DataHub folder (ChatHub.cs)
+            $.connection.hub.start().done(function ()
+            {
+                $('#sendmessage').click(function () //calling the function named "SendMessage" in DataHub -> ChatHub.cs class
+                {
+                    if ($('#message').val() == "" || $('#message').val() == " ")
+                    {
+                        alert("Emplty Field Not Allowed")
+                    }
+                    else
+                    {
+                        chat.server.sendMessage(sid, rid, $('#message').val()); //function name must start with small word for calling, not defining
+
+                        $('#message').val('').focus();
+                    }
+
+                });
+
+
+                $('#updDoneModal').click(function () //calling the function named "UpdateMessage" in DataHub -> ChatHub.cs class
+                {
+                    var cid = $("#updIdModal").val();
+                    var msg = $("#updMessageModal").val();
+
+                    chat.server.updateMessage(cid, msg); //function name must start with small word for calling, not defining
+                });
+
+                $('#proceed').click(function () //calling the function named "deleteMessage" in DataHub -> ChatHub.cs class
+                {
+                    var cid = $("#chatIdModal").val();
+
+                    chat.server.deleteMessage(cid, sid); //function name must start with small word for calling, not defining
+                });
+
+            });
+
+
+
+            chat.client.broadcastMessage = function (response, SenderId, SenderName, ChatId, Message) //response function it will be called from the function named "SendMessage(...)" of ChatHub.cs class
+            {
+                if (response == "1")
+                {
+                    GetChatCount(); //refreshing the message count by calling function
+
+                    ClearUnreadChat(); //Cearing Unred Messages
+
+                    if (SenderId == lid)
+                    {
+                        $("#cardbody").append('<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + Message + '<span class="msg_time_send">Sent By: You</span></div><div class="img_cont_msg"><i onclick="optionModal(' + ChatId + ')" class="fa fa-bars" style="font-size:2em; margin-top:4px;"></i></div></div>');
+                    }
+                    else
+                    {
+                        $("#cardbody").append('<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><i onclick="deleteModal(' + ChatId + ')" class="fa fa-bars" style="font-size:2em; margin-top:7px;"></i></div><div class="msg_cotainer">' + Message + '<span class="msg_time">Sent By: ' + SenderName + '</span></div></div>');
+                    }
+                }
+                else
+                {
+                    alert("Message Sending failed!");
+                }
+
+            };
+
+
+            chat.client.broadcastUpdateMessage = function (response) // response function it will be called from the function named "DeleteMessage(...)" of ChatHub.cs class
+            {
+                if (response == "1")
+                {
+                    $("#UpdateModal").hide(); //hiding delete modal
+
+                    $("#cardbody").empty(); //clearing div to append updated data
+
+                    GetChatCount(); //appending updated data after deletion
+                    GetChat(); //updating message count
+                    ClearUnreadChat(); //Cearing Unred Messages
+                }
+                else
+                {
+                    $("#UpdateModal").hide(); //hiding delete modal
+
+                    alert("Deletion Error");
+                }
+
+            };
+
+
+            chat.client.broadcastdeleteMessage = function (response) // response function it will be called from the function named "DeleteMessage(...)" of ChatHub.cs class
+            {
+                if (response == "1") {
+                    $("#DeleteModal").hide(); //hiding delete modal
+
+                    $("#cardbody").empty(); //clearing div to append updated data
+
+                    GetChatCount(); //appending updated data after deletion
+                    GetChat(); //updating message count
+                    ClearUnreadChat(); //Cearing Unread Messages
+                }
+                else {
+                    alert("Deletion Error");
+                }
+
+            };
+
+
+        });
+
+    </script>
+
+    <script>
+
+        function optionModal(id)
+        {
+            $("#chatIdModal").val(id);
+            $("#updIdModal").val(id);
+
+            $("#OptionModal").show();
+        }
+
+        function deleteModal(id)
+        {
+            $("#chatIdModal").val(id);
+
+            $("#DeleteModal").show();
+        }
+
+        $('#optDeleteModal').click(function ()
+        {
+            $("#OptionModal").hide();
+            $("#DeleteModal").show();
+        });
+
+        $('#optUpdateModal').click(function ()
+        {
+            var id = $("#updIdModal").val();
+
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: '@Url.Action("GetUpdateChat", "Home")',
+                data: { Id: id},
+                success: function (response)
+                {
+                    $("#updMessageModal").val(response.Message);
+
+                    $("#OptionModal").hide();
+                    $("#UpdateModal").show();
+                    
+                },
+                error: function (response)
+                {
+                    alert('Ajax Count Error');
+                }
+
+            });
+            
+        });
+
+
+
+
+        $('#optCancelModal').click(function ()
+        {
+            $("#OptionModal").hide();
+        });
+
+        $('#updCancelModal').click(function () //closing delete modal by pressing "No" button
+        {
+            $("#UpdateModal").hide();
+        });
+
+        $('#delCancelModal').click(function () //closing delete modal by pressing "No" button
+        {
+            $("#DeleteModal").hide();
+        });
+
+
+        function clearText() //clearing text from textbox by clicking "x" button
+        {
+            $("#message").val("");
+        }
+    </script>
+
+
+</body>
+
+
+
+</html>
+

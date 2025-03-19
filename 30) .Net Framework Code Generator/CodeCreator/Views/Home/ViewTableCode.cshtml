@@ -1,0 +1,249 @@
+﻿@using CodeCreator.Helping_Classes
+@using CodeCreator.BL
+@using CodeCreator.Models
+@{
+    DatabaseEntities de = new DatabaseEntities();
+
+    Code c = new CodeBL().GetActiveCodeById(StringCipher.DecryptId(ViewBag.Id), de);
+
+    string[] dbArray = c.DbArray.Split(','); 
+    
+    ViewBag.Title = c.TableName + " Code";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="content">
+
+    <div class="row m-10">
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <center>
+
+                    <h3 class="panel-title"><u>Code for @c.TableName Table</u></h3>
+                </center>
+            </div>
+
+            <div class="panel-body">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs nav-tabs-component">
+                        <li class="active"><a href="#tab1" data-toggle="tab" class="legitRipple" data-popup="tooltip" title="Database Table Query">Table</a></li>
+                        <li><a href="#tab2" data-toggle="tab" class="legitRipple" data-popup="tooltip" title="Stored Procedures">Proceudres</a></li>
+                        <li><a href="#tab3" data-toggle="tab" class="legitRipple" data-popup="tooltip" title="Data Access Layer">DAL</a></li>
+                        <li><a href="#tab4" data-toggle="tab" class="legitRipple" data-popup="tooltip" title="Business Logic Layer">BLL</a></li>
+                        <li><a href="#tab5" data-toggle="tab" class="legitRipple" data-popup="tooltip" title="Class DTO">DTO</a></li>
+                        <li><a href="#tab6" data-toggle="tab" class="legitRipple" data-popup="tooltip" title="Add/Update Objects">Objects</a></li>
+                        <li><a href="#tab7" data-toggle="tab" class="legitRipple" data-popup="tooltip" title="Post Add/Update/Delete Functions">Functions</a></li>
+                        <li><a href="#tab8" data-toggle="tab" class="legitRipple" data-popup="tooltip" title="All Datatable Functions">Data table</a></li>
+                        <li><a href="#tab9" data-toggle="tab" class="legitRipple" data-popup="tooltip" title="Html Input Fields">Fields</a></li>
+                        @*<li class="dropdown">
+                                <a href="#" class="dropdown-toggle legitRipple" data-toggle="dropdown" aria-expanded="false">More <span class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#tab3" data-toggle="tab">Tab 3</a></li>
+                                    <li><a href="#tab4" data-toggle="tab">Tab 4</a></li>
+                                </ul>
+                            </li>*@
+                    </ul>
+
+                    <div class="tab-content">
+
+                        <div class="tab-pane active" id="tab1">
+                            <center><h5><b><u>Database Table Query</u></b></h5></center>
+                            <br />
+                            <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                @Html.Raw(CodeFunction.CreateDatabaseTable(c.TableName, dbArray))
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="tab2">
+                            <div class="row">
+
+                                <center><h5><b><u>Get List Procedure</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateGetListProcedure(c.TableName, dbArray))
+                                </div>
+                            </div>
+
+                            <hr />
+                            
+                            <div class="row">
+
+                                <center><h5><b><u>Get By Id Procedure</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateGetByIdProcedure(c.TableName, dbArray))
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+
+                                <center><h5><b><u>Add/Update Procedure</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateAddUpdateProcedure(c.TableName, dbArray))
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="tab-pane" id="tab3">
+                            <center><h5><b><u>Data Access Layer</u></b></h5></center>
+                            <br />
+                            <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                @Html.Raw(CodeFunction.CreateDataAccessLayer(c.TableName))
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="tab4">
+                            <center><h5><b><u>Business Logic Layer</u></b></h5></center>
+                            <br />
+                            <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                @Html.Raw(CodeFunction.CreateBusinessLayer(c.TableName))
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="tab5">
+                            <center><h5><b><u>Class DTO</u></b></h5></center>
+                            <br />
+                            <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                @Html.Raw(CodeFunction.CreateDto(c.TableName, dbArray))
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="tab6">
+
+                            <div class="row">
+
+                                <center><h5><b><u>Add Object</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateAddObject(c.TableName, dbArray))
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <center><h5><b><u>Update Object</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateUpdateObject(c.TableName, dbArray))
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="tab7">
+                            <div class="row">
+
+                                <center><h5><b><u>Post Add Function</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreatePostAddFunction(c.TableName, dbArray))
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <center><h5><b><u>Post Update Function</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreatePostUpdateFunction(c.TableName, dbArray))
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <center><h5><b><u>Delete Function</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateDeleteFunction(c.TableName))
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="tab8">
+                            <div class="row">
+
+                                <center><h5><b><u>Table Header (Front end)</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateTableHeader(c.TableName, dbArray))
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <center><h5><b><u>Datatable Columns (Front end)</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateDatatableColumns(c.TableName, dbArray))
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <center><h5><b><u>Datatable Api Function</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateDatatableFunction(c.TableName, dbArray))
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <center><h5><b><u>Edit Ajax Function</u></b></h5></center>
+                                <br />
+                                <div class="col-lg-8 col-lg-offset-1" style="font-size:1.2em">
+
+                                    @Html.Raw(CodeFunction.CreateEditAjaxFunction(c.TableName, dbArray))
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="tab9">
+                            <center><h5><b><u>Input Fields</u></b></h5></center>
+                            <br />
+                            <div class="col-lg-9 col-lg-offset-1" style="font-size:1.2em">
+
+                                @Html.Raw(CodeFunction.CreateInputFields(c.TableName, dbArray))
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

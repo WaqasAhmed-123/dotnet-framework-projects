@@ -1,0 +1,67 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+
+    <div class="col-lg-3" style="border:1px solid black; border-radius:5px; margin-top:90px; margin-left:35%">
+        <!-- Main content -->
+
+        <div style="color:red; text-decoration:underline" align="center">
+            <h4>@ViewBag.Message</h4>
+        </div>
+        <div class="content-wrapper">
+
+
+            <!-- Simple login form -->
+            <form action="@Url.Action("PostRegistration","Auth")" class="login-form" method="post">
+                <div class="panel panel-body">
+                    <div class="text-center">
+                        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                        <h5 class="content-group">Sign Up Here</h5>
+                    </div>
+                    <div class="form-group">
+                        <label class="label pull-left">Full Name:</label>
+                        <input type="text" class="form-control" placeholder="enter full name" required name="Name">
+                    </div>
+                    <br />
+
+                    <div class="form-group">
+                        <label class="label pull-left">Email:</label>
+                        <input type="text" class="form-control" placeholder="Enter Email" required name="Email">
+                    </div>
+                    <br />
+
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" class="form-control" placeholder="Enter Password" required name="Password">
+
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block btn-info">Create</button>
+                        <a href="@Url.Action("Login","Auth")" class="btn btn-block btn-success">Sign In</a>
+                    </div>
+                    <br />
+
+                </div>
+            </form>
+            <!-- /simple login form -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+</body>
+</html>

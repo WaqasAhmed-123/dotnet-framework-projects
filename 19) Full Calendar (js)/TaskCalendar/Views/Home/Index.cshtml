@@ -1,0 +1,464 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <link href='~/Content/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
+    <link href='~/Content/fullcalendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+
+    <script src='~/Content/fullcalendar/lib/moment.min.js'></script>
+    <script src='~/Content/fullcalendar/lib/jquery.min.js'></script>
+    <script src='~/Content/fullcalendar/fullcalendar.min.js'></script>
+
+    @*It should be under the library of full calender*@
+    <script src='~/Content/fullcalendar/fullcalendar-rightclick.js'></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+    <style>
+
+        body {
+            margin: 40px 10px;
+            padding: 0;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            font-size: 14px;
+        }
+
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        #dltbtn:hover {
+            text-decoration: none;
+            background-color: black;
+        }
+
+
+
+
+        
+
+    </style>
+</head>
+<body>
+
+    @ViewBag.Message
+
+    <h3 align="center">on click task open new page</h3>
+
+
+    <a class="btn btn-info" href="@Url.Action("Calender2","Home")">Calender 2</a>
+    <br />
+    <br />
+
+    <div id='calendar'>
+
+    <div id="loading" align="center">
+        <img src="../Content/Images/loading.gif" width="150" />
+    </div>
+
+    </div>
+
+
+
+    <!--Add Task Modal-->
+    <div id="myModal" class="modal" style="width:500px; margin-left:550px;">
+        <br />
+        <br />
+        <br />
+        <br />
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" data-dismiss="modal"><span style="color:red;">&times;</span></span>
+            <h5 align="center">Enter Task Details</h5>
+
+            <form action="@Url.Action("AddTask","Home")" method="post">
+                Start Date: <input type="text" required name="StartDate" id="sdate" readonly />
+                <br />
+                End Date: <input type="text" required name="EndDate" id="edate" readonly />
+                <br />
+                Title: <input type="text" required name="Title" id="title" />
+                <br />
+                Task Details: <input type="text" required name="TaskDetail" id="detail" />
+                <br />
+                <br />
+                Priority: <select required name="Priority" id="priority">
+                    <option value="1">High</option>
+                    <option value="2">Medium</option>
+                    <option value="3">Low</option>
+                </select>
+
+                <br />
+                <br />
+                <input type="submit" value="save" />
+
+            </form>
+        </div>
+
+
+    </div>
+    <!--Add Task Modal-->
+    <!--Delete Task Modal-->
+    <div id="dltModal" class="modal" style="width:500px; margin-left:550px;">
+        <br />
+        <br />
+        <br />
+        <br />
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" data-dismiss="modal"><span style="color:red;">&times;</span></span>
+            <h5 align="center">Delete Task?</h5>
+
+            <form action="@Url.Action("DeleteTask","Home")" method="post">
+                Id: <input type="text" required name="Id" id="dltId" readonly />
+
+
+                <br />
+                <br />
+                <button type="submit" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+            </form>
+        </div>
+
+
+    </div>
+    <!--Delete Task Modal-->
+    <!--Option Modal-->
+    <div id="optModal" class="modal" style="width:500px; margin-left:550px;">
+        <br />
+        <br />
+        <br />
+        <br />
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" data-dismiss="modal"><span style="color:red;">&times;</span></span>
+            <h5 align="center">Select Option</h5>
+
+
+            Task Id: <input type="text" required name="Id" id="optId" readonly style="border:none" />
+
+
+            <br />
+            <br />
+            <div class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Select option <i class="fc-icon-down-triangle"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Add Reminder</a>
+                    <br />
+                    <a class="dropdown-item" href="#" id="dtllink" onclick="DetailOptionTask()">View Details</a>
+                    <br />
+                    <a class="dropdown-item" data-toggle='modal' href="#" data-target='#dltModal' onclick="DeleteOptionTask()">Delete Task</a>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+    <!--Option Modal-->
+
+</body>
+
+
+
+
+
+</html>
+
+<script>
+
+
+
+
+    
+
+    $(document).ready(function ()
+    {
+        
+        
+        $(function LoadCalender()
+        {
+            $('#calendar').fullCalendar({
+                //theme: true,  //it will change the calender theme 
+                header:
+                {
+                    left: 'prevYear, prev,next, nextYear, today',
+                    center: 'title',
+                    right: 'month, basicWeek, basicDay, listDay, listWeek, listMonth, listYear'
+                },
+                buttonText: //setting the text of buttons on top of Calender
+                {
+                    //prevYear: parseInt(new Date().getFullYear(), 10) - 1,
+                    prevYear: "Last Year",
+                    //nextYear: parseInt(new Date().getFullYear(), 10) + 1,
+                    nextYear: "Next Year",
+                    month: "Month",
+                    basicWeek: 'Week',
+                    basicDay: 'Day',
+                    today: 'Today',
+                    listDay: 'Day List',
+                    listWeek: 'Week List',
+                    listMonth: 'Month List',
+                    listYear: 'Year List'
+                },
+                //viewDisplay: function (view)  // set label to next and previous years buttons
+                //{
+                //    var d = $('#calendar').fullCalendar('getDate');
+                //    $(".fc-button-prevYear .fc-button-content").text(parseInt(d.getFullYear(), 10) - 1);
+                //    $(".fc-button-nextYear .fc-button-content").text(parseInt(d.getFullYear(), 10) + 1);
+                //},
+                defaultDate: new Date(),
+                //weekNumbers: true, //show number of week of year at left side
+                editable: true, //it will allow to resize and drag the task on calender
+                navLinks: true, //make the each task clickable
+                selectable: true, //allow onclick listener on each day
+                select: function (start, end) //opening modal on clicking each day
+                {
+                    var today = start["_d"];
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1;
+                    var yyyy = today.getFullYear();
+                    if (dd < 10) {
+                        dd = '0' + dd
+                    }
+                    if (mm < 10) {
+                        mm = '0' + mm
+                    }
+                    var sdate = mm + "/" + dd + "/" + yyyy;
+
+
+                    var end = end["_d"];
+                    var dd2 = end.getDate();
+                    var mm2 = end.getMonth() + 1;
+                    var yyyy2 = end.getFullYear();
+                    if (dd2 < 10) {
+                        dd2 = '0' + dd2
+                    }
+                    if (mm2 < 10) {
+                        mm2 = '0' + mm2
+                    }
+                    var edate = mm2 + "/" + dd2 + "/" + yyyy2;
+
+                    $('#myModal').modal('show');
+
+                    $('#sdate').val(sdate);
+                    $('#edate').val(edate);
+
+                    $('#calendar').fullCalendar('unselect');
+                },
+                events: GetTaskData, //assigning tasks to the calender by calling function "GetTaskData"
+                eventLimit: true, // if false then show the limited tasks only
+                //eventLimitText: "More Tasks", //change "+ more" with custom text
+                views: //show number of custom tasks on calender
+                {
+                    month: //applied on monthly view
+                    {
+                        eventLimit: 3 // it will show 2 tasks and then 3rd will be in "+ more" option
+                    },
+                    week: //applied on weekly view
+                    {
+                        eventLimit: 3
+                    },
+                    day: //applied on daily view
+                    {
+                        eventLimit: 3
+                    }
+                },
+                eventOrder: "-color", //ordering tasks on the basis of color
+                displayEventTime: false,  //disable time showing with task
+                eventRender: function (events, $element) //showing tooltip on hovering by each task + delete task button
+                {
+                    
+                    $element.prepend("<a id='optbtn' data-toggle='modal' data-target='#optModal' onclick='OptionTask(" + events.id + ")' style='color:white; float: left; font-weight:bold; margin-right:10px; margin-left:5px;' title='Options'> <i class='glyphicon glyphicon-th-list'></i> </a>");
+
+
+                    //$element.bind('mousedown', function () //triggered when right button clicked on event
+                    //{
+                    //    alert(events.title);
+                    //});
+
+                    $element.popover({
+                        //title: events.Title,
+                        //content: 'Task Name: ' + events.title + ', Start Date: ' + events.start.format('Y-MM-DD HH:mm:ss'),
+                        content: function () {
+                            return '<h4 class="text-center"><b>' + events.title + '</b></h4>' + events.PopoverString;
+                        },
+                        trigger: 'hover',
+                        placement: 'top',
+                        container: 'body',
+                        html: 'true'
+                    });
+                },
+                eventRightclick: function (events) //triggered when right clicked on calender task
+                {
+                    OptionTask(events.id);
+
+                    $('#optModal').modal('show');
+
+                    return false; // Prevent browser context menu:
+                },
+                dayRightclick: function (date, events, view) //triggered when right clicked on a day in calender
+                {
+                    var today = date["_d"];
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1;
+                    var yyyy = today.getFullYear();
+                    if (dd < 10) {
+                        dd = '0' + dd
+                    }
+                    if (mm < 10) {
+                        mm = '0' + mm
+                    }
+                    var sdate = mm + "/" + dd + "/" + yyyy;
+
+                    alert('Date is ' + sdate);
+
+                    return false;
+                },
+                eventDrop: function (events) //update task while moving it from 1 date to another date
+                {
+                    var sdate = events.start.format('Y-MM-DD HH:mm:ss');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "../Home/TaskUpdateOnDrag",
+                        data: { Id: events.id, Startdate: sdate },
+                        dataType: "json",
+                        success: function (data) {
+                            //no need to show response
+                        },
+                        error: function () {
+                            alert("Error Updating");
+                        }
+                    });
+
+                },
+                eventResize: function (events) //act when we resize a task on calender
+                {
+
+                    var edate = events.end.format('Y-MM-DD HH:mm:ss');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "../Home/TaskUpdateOnResize",
+                        data: { Id: events.id, Enddate: edate },
+                        dataType: "json",
+                        success: function (data) {
+                            $('.popover.in').remove(); //need to remove popover because its shows weird behaviour on change
+                        },
+                        error: function () {
+                            alert("Error resizing");
+                        }
+                    });
+                },
+                
+                //eventClick: function (events) //on click task will open modal (in order to work we need to remove url in events)
+                //{
+
+                //    $("#id2").text(events.id);
+                //    $("#sdate2").text(events.start.format('Y-MM-DD HH:mm:ss'));
+                //    $("#edate2").text(events.end.format('Y-MM-DD HH:mm:ss'));
+                //    $("#title2").text(events.title);
+                //    $("#detail2").text(events.description);
+
+                //    $('#myModal2').modal('show');
+
+                //},
+                loading: function (bool) //toggle message while loading data
+                {
+                    $('#loading').toggle(bool);
+                }
+
+
+            });
+
+            function GetTaskData(start, end, timezone, callback)
+            {
+                //formating the startdate and enddate to pass backend function whenever calender loads
+                var today = start["_d"];
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+                if (mm < 10) {
+                    mm = '0' + mm
+                }
+                var sdate = mm + "/" + dd + "/" + yyyy;
+
+                var end = end["_d"];
+                var dd2 = end.getDate();
+                var mm2 = end.getMonth() + 1;
+                var yyyy2 = end.getFullYear();
+                if (dd2 < 10) {
+                    dd2 = '0' + dd2
+                }
+                if (mm2 < 10) {
+                    mm2 = '0' + mm2
+                }
+                var edate = mm2 + "/" + dd2 + "/" + yyyy2;
+                //formating the startdate and enddate to pass backend function whenever calender loads
+
+                $.ajax(
+                {
+                    type: 'Post',
+                    url: "../home/GetTaskData",
+                    data: { startdate: sdate, enddate: edate },
+                    success: function (events)
+                    {
+                        callback(events)
+                    },
+                    error: function ()
+                    {
+                        alert("Data fetching Error");
+                    }
+                });
+            }
+
+        });
+
+    });
+
+    //function DeleteTask(id) {
+    //    $('#dltId').val(id);
+    //}
+
+
+    function OptionTask(id) {
+        $('#optId').val(id);
+    }
+
+    function DeleteOptionTask()
+    {
+        var id = document.getElementById("optId").value;
+
+        $('#optModal').modal('toggle');
+
+        $('#dltId').val(id);
+    }
+
+
+    function DetailOptionTask() {
+        var id = document.getElementById("optId").value;
+
+        $("#dtllink").attr("href", "../Home/TaskDetail?_Id=" + id + "");
+    }
+
+
+</script>
+

@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddStudent</title>
+</head>
+<body>
+
+    <div>
+        @ViewBag.Message
+    </div>
+
+    <center>
+        <h3><u>Add New Student</u></h3>
+        <form action="@Url.Action("PostAddStudent","Home")" method="post">
+            Roll No. : <input type="number" required name="RollNo" />
+            <br />
+            <br />
+            Name : <input type="text" required name="Name" />
+            <br />
+            <br />
+            Age : <input type="number" required name="Age" />
+            <br />
+            <br />
+            Class : <input type="text" required name="Class" />
+            <br />
+            <br />
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            Course Name : <input type="text" required name="Course" />
+            <br />
+            <br />
+
+            <input type="submit" name="submit" value="Add Student" />
+        </form>
+    </center>
+</body>
+</html>

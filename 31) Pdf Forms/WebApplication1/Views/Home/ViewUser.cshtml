@@ -1,0 +1,386 @@
+﻿@using WebApplication1.Helping_Classes
+
+@{
+    ViewBag.Title = "View User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var roles = Enum.GetValues(typeof(EnumRole)).Cast<EnumRole>().Select(v => (int)v).ToArray();
+}
+
+<style>
+    .table > tbody > tr > td {
+        padding: 5px !important;
+    }
+</style>
+
+
+<div class="modal fade" id="updateModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="text-center text-bold">Update User</h5>
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="@Url.Action("PostUpdateUser","Home")" method="post">
+
+                    <input type="hidden" name="Id" id="updId" />
+
+                    <div class="form-group">
+                        <label class="text-bold">First Name <span class="text-danger">*</span></label>
+                        <input type="text" id="updFName" class="form-control" required name="FirstName" placeholder="Enter First Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-bold">Last Name <span class="text-danger">*</span></label>
+                        <input type="text" id="updLName" class="form-control" required name="LastName" placeholder="Enter Last Name">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="text-bold">D.O.B <span class="text-danger">*</span></label>
+                        <input type="date" id="updDob" name="Dob" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-bold">Contact <span class="text-danger">*</span></label>
+                        <input type="text" id="updContact" class="form-control" name="Contact" placeholder="Enter User Contact Number" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-bold">Address <span class="text-danger">*</span></label>
+                        <input type="text" id="updAddress" class="form-control" name="Address" placeholder="Enter User Address" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-bold">Email <span class="text-danger">*</span></label>
+                        <input type="email" id="updEmail" name="Email" class="form-control" onkeyup="validateEmail(this.value)" placeholder="Add Email Here" required>
+                        <span class="text-danger" id="updEmailErrMsg"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-bold">Gender <span class="text-danger">*</span></label>
+                        <br />
+                        <label><input type="radio" id="updGenderMale" name="Gender" value="Male" required /> Male</label>
+                        &nbsp;
+                        &nbsp;
+                        <label><input type="radio" id="updGenderFemale" name="Gender" value="Femal" required /> Female</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-bold">Role <span class="text-danger">*</span></label>
+                        <select class="form-control" id="updRole" name="Role" required>
+                            <option value="">-- Select Role --</option>
+                            @foreach (var i in roles)
+                            {
+                                <option value="@i">@Enum.GetName(typeof(EnumRole), i)</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" value="submit" class="btn btn-primary" id="updSubBtn">Update</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="panel p-20 m-10">
+
+    <div class="row">
+        <center><u><h3>Users List</h3></u></center>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-2 pull-right btn-block">
+            <a href="@Url.Action("AddUser","Home")" class="btn btn-primary m-5 pull-right">Add New</a>
+        </div>
+    </div>
+
+
+
+    <div class="table-responsive">
+        <table class="table text-md-nowrap table-striped table-bordered text-center no-footer" id="userTable">
+            <thead class="bg-blue-800">
+                <tr>
+                    <th class="text-bold" hidden>...</th>
+                    <th class="text-bold text-center" style="min-width:130px">
+                        Action
+                    </th>
+                    <th class="text-bold text-center" style="min-width:140px;">
+                        Name
+                    </th>
+                    <th class="text-bold text-center" style="min-width:150px;">
+                        D.O.B
+                    </th>
+                    <th class="text-bold text-center" style="min-width:140px;">
+                        Contact
+                    </th>
+                    <th class="text-bold text-center" style="min-width:150px;">
+                        Address
+                    </th>
+                    <th class="text-bold text-center" style="min-width:150px;">
+                        Email
+                    </th>
+                    <th class="text-bold text-center" style="min-width:130px;">
+                        Gender
+                    </th>
+                    <th class="text-bold text-center" style="min-width:130px;">
+                        Role
+                    </th>
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+<script>
+
+
+    loadTable();
+
+    function loadTable()
+    {
+        $('#userTable').DataTable(
+        {
+            "ajax":
+            {
+                "url": '@Url.Action("GetUserDataTableList", "Ajax")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            'columns':
+            [
+                { "data": "hidden", "name": "0" },
+                { "data": "Action", "name": "0" },
+                { "data": "FirstName", "name": "FirstName" },
+                { "data": "Dob", "name": "Dob" },
+                { "data": "Contact", "name": "Contact" },
+                { "data": "Address", "name": "Address" },
+                { "data": "Email", "name": "Email" },
+                { "data": "Gender", "name": "Gender" },
+                { "data": "Role", "name": "Role" },
+            ],
+            'columnDefs':
+            [
+                {
+                    "targets": 0,
+                    "visible": false,
+                    "searchable": false,
+                    "render": function (data, type, full, meta) {
+                        return null;
+                    }
+                },
+                {
+                    "targets": 1,
+                    'className': '',
+                    'sortable': false,
+                    "render": function (data, type, full, meta)
+                    {
+                        return '<ul class="icons-list"> ' +
+                            '<li class="dropdown" >' +
+                            '			<a href="#" class="dropdown-toggle" data-toggle="dropdown">' +
+                            '				<i class="icon-menu9"></i>' +
+                            '			</a>' +
+                            '			<ul class="dropdown-menu dropdown-menu-left"  style="padding-left:5px !important; min-width:143px !important;">' +
+                            '				<li>' +
+                            '                   <span><a href="../Home/GeneratePdf?id=' + full.Id + '" class="btn btn-sm bg-success icon-download" title="Download pdf file" target="_blank"></a></span>' +
+                            '                   <button class="btn btn-sm bg-info icon-pencil" onclick="updateFunction(' + full.Id + ')" title="Edit"></button>' +
+                            '                   <button class="btn btn-sm bg-danger icon-bin" onclick="deleteFunction(' + full.Id + ')" title="Delete"></button>' +
+                            '               </li>' +
+                            '			</ul>' +
+                            '		</li >' +
+                            '	</ul >';
+                    }
+                },
+                {
+                    "targets": 2,
+                    'className': '',
+                    "render": function (data, type, full, meta)
+                    {
+                        return full.Name ;
+                    }
+                },
+                {
+                    "targets": 3,
+                    'className': '',
+                    "render": function (data, type, full, meta) {
+                        return full.Dob;
+                    }
+                },
+                {
+                    "targets": 4,
+                    'className': '',
+                    "render": function (data, type, full, meta) {
+                        return full.Contact;
+                    }
+                },
+                {
+                    "targets": 5,
+                    'className': '',
+                    "render": function (data, type, full, meta) {
+                        return full.Address;
+                    }
+                },
+                {
+                    "targets": 6,
+                    'className': '',
+                    "render": function (data, type, full, meta) {
+                        return full.Email;
+                    }
+                },
+                {
+                    "targets": 7,
+                    'className': '',
+                    "render": function (data, type, full, meta) {
+                        return full.Gender;
+                    }
+                },
+                {
+                    "targets": 8,
+                    "render": function (data, type, full, meta)
+                    {
+                        return full.Role;
+                    }
+                },
+            ],
+            "serverSide": "true",
+            "processing": "true",
+            "language":
+            {
+                "processing": "<i class='icon-spinner spinner icon-2x'></i>",
+                "search": "<span>Search :</span> _INPUT_",
+                "searchPlaceholder": "Filter record",
+                "lengthMenu": "<span>Show :</span> _MENU_",
+                "paginate": { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            }
+        });
+    }
+
+
+    function updateFunction(id)
+    {
+        $('#updEmailErrMsg').text("");
+        $('#updSubBtn').attr('disabled', false);
+
+        $("#loadImg").show();
+
+        $.ajax({
+            type: 'POST',
+            url: "../Ajax/GetUserById",
+            dataType: "json",
+            data: {
+                id: id
+            },
+            success: function (response)
+            {
+                if (response == 0)
+                {
+                    alert("Record not found.");
+                    location.reload();
+                }
+
+                $("#updId").val(response.Id);
+
+                $("#updFName").val(response.Name);
+                $("#updLName").val(response.LName);
+                $("#updDob").val(response.Dob);
+                $("#updContact").val(response.Contact);
+                $("#updAddress").val(response.Address);
+                $("#updEmail").val(response.Email);
+
+                if (response.Gender == "Male") {
+                    $("#updGenderMale").prop("checked", true);
+                }
+                else {
+                    $("#updGenderFemale").prop("checked", true);
+                }
+                $("#updRole").val(response.Role).change();
+                $("#updRole").val(response.Role).change();
+
+                $("#loadImg").hide();
+                $("#updateModal").modal('show');
+            },
+            error: function ()
+            {
+                $("#loadImg").hide();
+
+                alert("ajax Failed");
+            }
+        });
+
+    }
+
+    function validateEmail(email)
+    {
+        var id = $('#updId').val();
+        if (email != "" && id != "")
+        {
+            $.ajax({
+                type: 'POST',
+                url: "../Ajax/ValidateEmail",
+                dataType: "json",
+                data: {
+                    role: 2, email: email, id: id
+                },
+                success: function (response)
+                {
+                    if (response == true)
+                    {
+                        $('#updEmailErrMsg').text("");
+                        $('#updSubBtn').attr('disabled', false);
+                    }
+                    else {
+                        $('#updEmailErrMsg').text("Duplicate Email");
+                        $('#updSubBtn').attr('disabled', true);
+                    }
+                },
+                error: function ()
+                {
+                    $('#updEmailErrMsg').text("");
+                    $('#updSubBtn').attr('disabled', false);
+
+                    alert("Ajax failed");
+                }
+            });
+        }
+
+    }
+
+
+    function deleteFunction(id) {
+        $('#confirmModalHeading').text('Warning!');
+        $('#confirmModalHeader').removeClass('bg-success');
+        $('#confirmModalHeader').addClass('bg-danger');
+        $('#confirmModalText').empty();
+        $('#confirmModalText').append('Do you really want to delete this user?<br />' +
+            'This user is going to permanently delete from our system.<br />' +
+            'The action cannot be undone.');
+
+        var a = document.getElementById('confirmModalId');
+        a.href = "../Home/DeleteUser?id=" + id ;
+
+        $('#confirmModal').modal('show');
+    }
+
+</script>
+
+<script>
+    //Used to handle Sidebar links Activeness
+    $("#adminManageusr2").addClass('active');
+
+</script>
+

@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+@using AdminPanel.Models
+
+
+    <div>
+
+        <div class="col-lg">
+
+            <!-- Traffic sources -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h4 class="panel-title" align="center">
+                        <u>Manage Teachers</u>
+                    </h4>
+                </div>
+                <br />
+
+                <div class="container-fluid">
+                    <div class="col">
+                        <div class="col-lg-6">
+                            <ul class="list-inline text-center">
+
+                                <li>
+                                    <a href="@Url.Action("AddTeacher", "Teacher")" class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom">
+                                        <i class="icon-plus3"></i>
+                                    </a>
+                                </li>
+                                @{
+                                    int t1 = 0;
+                                    foreach (Teacher t in ViewBag.tlist1)
+                                    { t1++; }
+                                 }
+                                    <li class="text-center">
+                                        <div class="text-bold">Add Teacher</div>
+                                        <div class="text-muted"> Active = @t1</div>
+
+                                    </li>
+                                </ul>
+
+
+                        </div>
+
+
+
+                        <div class="col-lg-4.5">
+                            <ul class="list-inline text-center">
+                                <li>
+                                    <a href="@Url.Action("GetTeacher", "Teacher")" class="btn border-indigo-400 text-indigo-400 btn-flat btn-rounded btn-icon btn-xs valign-text-bottom">
+                                        <i class="icon-file-text3"></i>
+                                    </a>
+                                </li>
+
+                                @{
+                                    int t2 = 0;
+                                    foreach (Teacher t in ViewBag.tlist2)
+                                    { t2++; }
+                                }
+                                <li class="text-left">
+                                    <div class="text-semibold">View Record</div>
+                                    <div class="text-muted"> Inactive = @t2</div>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /traffic sources -->
+
+        </div>
+
+
+        <div class="col-lg">
+
+            <!-- Traffic sources -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h4 class="panel-title" align="center">
+                        <u>Manage Students</u>
+                    </h4>
+                </div>
+                <br />
+
+                <div class="container-fluid">
+                    <div class="col">
+                        <div class="col-lg-6">
+                            <ul class="list-inline text-center">
+
+                                <li>
+                                    <a href="@Url.Action("AddStudent", "Student")" class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom">
+                                        <i class="icon-plus3"></i>
+                                    </a>
+                                </li>
+                                @{
+                                    int s1 = 0;
+                                    foreach (Student s in ViewBag.slist1)
+                                    { s1++; }
+                                }
+                                <li class="text-center">
+                                    <div class="text-bold">Add Student</div>
+                                    <div class="text-muted"> Active = @s1</div>
+
+                                </li>
+                            </ul>
+
+
+                        </div>
+
+
+
+                        <div class="col-lg-4.5">
+                            <ul class="list-inline text-center">
+                                <li>
+                                    <a href="@Url.Action("GetStudent", "Student")" class="btn border-indigo-400 text-indigo-400 btn-flat btn-rounded btn-icon btn-xs valign-text-bottom">
+                                        <i class="icon-file-text3"></i>
+                                    </a>
+                                </li>
+                                @{
+                                    int s2 = 0;
+                                    foreach (Student s in ViewBag.slist2)
+                                    { s2++; }
+                                }
+                                <li class="text-left">
+                                    <div class="text-semibold">View Record</div>
+                                    <div class="text-muted"> Inactive = @s2</div>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /traffic sources -->
+
+        </div>
+
+
+
+    </div>

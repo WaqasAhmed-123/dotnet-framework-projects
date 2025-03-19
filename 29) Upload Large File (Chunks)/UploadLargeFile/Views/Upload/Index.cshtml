@@ -1,0 +1,166 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+
+    <center>
+        <br />
+        <br />
+    <div id="dvDragFiles" style="border-radius:5px; background-color:lightgray; height:110px; width:90%; padding:20px;">
+    <div>
+        <input type="file" name="file" id="postedFile" multiple/>
+        <button type="button" onclick="UploadFile()">Upload</button>
+    </div>
+        <br />
+        <br />
+        <br />
+        You can drag multiple files here.
+    </div>
+    </center>
+    <div id="sts" style="margin-left:50px; font-weight:bold; color:lightgreen"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#dvDragFiles').on({
+                'dragover dragenter': function (e) {
+                    $(e.currentTarget).css({ opacity: 0.5 });
+                    e.preventDefault();
+                    e.stopPropagation();
+                },
+                'drop': function (e) {
+                    console.log("Drop");
+                    //Upload file here
+                    onFileDrop(e);
+                    e.preventDefault();
+                    e.stopPropagation();
+                },
+                'dragexit dragend dragleave': function (e) {
+                    $(e.currentTarget).css({ opacity: 1 });
+                }
+            });
+
+            function onFileDrop(evt) {
+                $(evt.currentTarget).css({ opacity: 1 });
+                try {
+                    var files = evt.originalEvent.dataTransfer.files;
+                    for (var i = 0; i < files.length; i++) {
+                        GenerateFileChunks(files[i]);
+                    }
+                }
+                catch (e) {
+                    console.log(e);
+                }
+            }
+        });
+
+
+        function UploadFile()
+        {
+            var fileUpload = $("#postedFile").get(0);
+            var files = fileUpload.files;
+            if (files.length === 0) {
+                alert("Please select some files.");
+                return;
+            }
+            for (var i = 0; i < files.length; i++)
+            {
+                GenerateFileChunks(files[i]);
+            }
+        }
+
+    </script>
+
+    <script>
+        function GenerateFileChunks(file)
+        {
+            //max file chunk size set to 100 KB change as per requirement.
+            var maxFileSizeKB = 30000;
+
+            var fileChunks = [];
+            var bufferChunkSizeInBytes = maxFileSizeKB * (1024);
+
+            var currentStreamPosition = 0;
+            var endPosition = bufferChunkSizeInBytes;
+            var size = file.size;
+
+            while (currentStreamPosition < size)
+            {
+                fileChunks.push(file.slice(currentStreamPosition, endPosition));
+                currentStreamPosition = endPosition;
+                endPosition = currentStreamPosition + bufferChunkSizeInBytes;
+            }
+
+            //Append random number to file name to make it unique
+            var fileName = Math.random() + "_" + file.name;
+            uploadFileChunk(fileChunks, fileName, 1, fileChunks.length);
+        }
+
+    </script>
+
+    <script>
+        function uploadFileChunk(fileChunks, fileName, currentPart, totalPart) {
+            var formData = new FormData();
+            formData.append('file', fileChunks[currentPart - 1], fileName);
+
+            $.ajax({
+                type: "POST",
+                url: '../Upload/UploadFileChunks',
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (data) {
+                    if (totalPart >= currentPart) {
+                        $("#sts").text("uploading file part no: " + currentPart + " out of " + totalPart);
+                        if (data.status == true) {
+
+                            if (totalPart == currentPart) {
+                                //Whole file uploaded
+                                $("#sts").text("whole file uploaded successfully");
+                            } else {
+                                //Show uploading progress
+                                uploadFileChunk(fileChunks, fileName, currentPart + 1, totalPart);
+                            }
+                        } else {
+                            //retry message to upload rest of the file
+                            $("#sts").text("failed to upload file part no: " + currentPart);
+                        }
+                    }
+                },
+                error: function () {
+                    //retry message to upload rest of the file
+                    console("error to upload file part no: " + currentPart);
+                }
+            });
+
+        }
+    </script>
+
+    <script>
+        function Mergefiles() {
+            $.ajax({
+                url: '../Upload/UploadComplete',
+                type: 'GET',
+                data: {fileName: "test.pdf"},
+                dataType: 'json',
+                success: function (data) {
+                    alert('Data: ');
+                },
+                error: function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+    </script>
+</body>
+</html>

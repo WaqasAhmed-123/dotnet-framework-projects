@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "ReceiveSms";
+}
+
+
+@{ 
+    string aa = "Sent from your Twilio trial account -  hello, Sender # waqas\nhttps://m.twil.io/nk0kdqa9lY";
+
+    string[] tokens = aa.Split('\n');
+    
+    string b = tokens[1];
+}
+
+<h1>@b</h1>

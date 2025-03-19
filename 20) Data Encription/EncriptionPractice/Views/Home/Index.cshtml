@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<br />
+<br />
+<br />
+<center>
+
+    <form action="@Url.Action("PostIndex","Home")">
+        <label>Enter String to Encode</label><br />
+        <input type="text" required name="Name" />
+        <br />
+
+        <input type="submit" value="Encript" />
+
+    </form>
+    <hr />
+
+    <br />
+    <br />
+    <br />
+
+    <form action="@Url.Action("PostIndex2","Home")">
+        <label>Enter String to Encode</label><br />
+        <input type="text" required name="Name" />
+        <br />
+
+        <label>Enter Encription Key</label><br />
+        <input type="text" required name="Key" />
+        <br />
+
+        <input type="submit" value="Encript" />
+
+    </form>
+
+</center>

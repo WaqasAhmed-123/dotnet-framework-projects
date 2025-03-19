@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecoder", "ScreenRecoder\ScreenRecoder.csproj", "{106BD624-E9B8-4021-AED6-FB446BE0EF3F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{106BD624-E9B8-4021-AED6-FB446BE0EF3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{106BD624-E9B8-4021-AED6-FB446BE0EF3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{106BD624-E9B8-4021-AED6-FB446BE0EF3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{106BD624-E9B8-4021-AED6-FB446BE0EF3F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0A7D1925-6A66-4AA3-B7B7-F9B57206610A}
+	EndGlobalSection
+EndGlobal

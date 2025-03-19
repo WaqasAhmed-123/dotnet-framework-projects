@@ -1,0 +1,23 @@
+CREATE TABLE [dbo].[User] (
+    [Id]        INT            IDENTITY (1, 1) NOT NULL,
+    [Name]      NVARCHAR (355) NULL,
+    [Email]     NVARCHAR (355) NULL,
+    [Password]  NVARCHAR (MAX) NULL,
+    [Role]      INT            NULL,
+    [IsActive]  INT            NULL,
+    [CreatedAt] DATETIME       NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+--------------------------------------------
+
+CREATE TABLE [dbo].[Code] (
+    [Id]         INT            IDENTITY (1, 1) NOT NULL,
+    [TableName]  NVARCHAR (355) NULL,
+    [DbArray]    NVARCHAR (MAX) NULL,
+    [IsActive]   INT            NULL,
+    [CreatedAt]  DATETIME       NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+

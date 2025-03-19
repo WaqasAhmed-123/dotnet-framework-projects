@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "AddTask";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <form class="col-lg-6 col-lg-offset-3 table-bordered border-radius" action="@Url.Action("PostAddTask","Home")" method="post">
+        <div style="color:@ViewBag.Color">@ViewBag.Message</div>
+        <center><h3>Add new Task</h3></center>
+
+        <div class="form-group">
+            <label>Task Name</label>
+            <input type="text" name="Name" class="form-control" placeholder="Enter Task Name Here" required />
+        </div>
+
+        <div class="form-group">
+            <label>Task Date</label>
+            <input type="date" name="Date" class="form-control" placeholder="Enter Task Date Here" required />
+        </div>
+
+        <div class="form-group">
+            <label>Task Duration</label>
+            <input type="number" step="0.01" min="0" name="Duration" class="form-control" placeholder="Enter TAsk Duration Here" required />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-success" value="Add" />
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Recorder</title>
+
+</head>
+
+<body>
+
+    <div align="center">
+        <div id="controls" >
+            <button id="recordButton">Record</button>
+            <button id="pauseButton" disabled>Pause</button>
+            <button id="stopButton" disabled>Stop</button>
+        </div>
+
+        <div id="formats">Format: start recording to see sample rate</div>
+
+    </div>
+        <p><strong>Recordings:</strong></p>
+        <ol id="recordingsList"></ol>
+
+
+
+    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+    
+
+    <script src="~/Content/js/recorder.js"></script>
+    <script src="~/Content/js/app.js"></script>
+    @*<script>
+        Recorder.upload({
+            method: "POST",
+            url: '@Url.Action("Upload", "Home")',
+            audioParam: "Recording",
+            params: {
+                "Title": title,
+                "Description": description
+            },
+            success: function (responseText) {
+                alert(responseText.Success);
+            },
+            error: function () {
+                alert("error");
+            },
+            progress: NULL
+        });
+    </script>*@
+
+
+</body>
+</html>

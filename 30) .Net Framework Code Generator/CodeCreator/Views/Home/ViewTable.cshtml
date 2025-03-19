@@ -1,0 +1,277 @@
+﻿@using CodeCreator.Helping_Classes
+@{
+    ViewBag.Title = "View Table Records";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table > tbody > tr > td {
+        padding: 5px !important;
+    }
+
+</style>
+
+
+<div class="modal fade" id="updateModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="text-center text-bold">Update Table</h5>
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="@Url.Action("PostUpdateTable","Home")" method="post" enctype="multipart/form-data">
+
+                    <input type="hidden" name="Id" id="updId" />
+                    <input type="hidden" name="way" value="@ViewBag.Way" />
+
+                    <div class="form-group">
+                        <label class="text-bold">Table Name <span class="text-danger">*</span></label>
+                        <input type="text" id="tableName" onkeyup="validateSpace(this.value)" class="form-control" required name="TableName" placeholder="Enter Table Name Here" style="text-transform: capitalize;">
+                        <span class="text-danger">Please do not add space in table name.</span><br />
+                        <span class="text-danger">First letter should be capital.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-bold">Table Columns <span class="text-danger">*</span></label>
+                        <textarea id="tableColumn" onkeyup="validateSpace2(this.value)" class="form-control" required name="DbArray" placeholder="Name,Contact,Email,Address,Role" style="text-transform: capitalize;" rows="3"></textarea>
+                        <span class="text-danger">Please do not add space in column names.</span><br />
+                        <span class="text-danger">First letter should be capital.</span><br />
+                        <span class="text-danger">Use comma (,) to separate columns.</span><br />
+                        <span class="text-danger">Do not add Id/IsActive/Createdat Columns.</span><br />
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" value="submit" class="btn btn-primary" id="updSubBtn">Update</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="panel p-20 m-10">
+
+    <div class="row">
+        <center><u><h3>Tables List</h3></u></center>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-2 pull-right btn-block">
+            <a href="@Url.Action("AddTable","Home")" class="btn btn-primary m-5 pull-right" data-popup="tooltip" title="Add new table">Add New</a>
+        </div>
+    </div>
+
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered no-footer" id="dataTable">
+            <thead class="bg-indigo-600">
+                <tr>
+                    <th class="text-bold" hidden>...</th>
+                    <th class="text-bold text-center" >
+                        Table Name
+                    </th>
+                    <th class="text-bold text-center" >
+                        Table Columns
+                    </th>
+                    <th class="text-bold text-center">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    loadTable();
+
+    function loadTable()
+    {
+        $('#dataTable').DataTable(
+        {
+            "ajax":
+            {
+                "url": '@Url.Action("GetCodeDataTableList", "Ajax")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            'columns':
+            [
+                { "data": "hidden", "name": "0" },
+                { "data": "TableName", "name": "TableName" },
+                { "data": "DbArray", "name": "DbArray" },
+                { "data": "Action", "name": "0" },
+            ],
+            'columnDefs':
+            [
+                {
+                    "targets": 0,
+                    "visible": false,
+                    "searchable": false,
+                    "render": function (data, type, full, meta) {
+                        return null;
+                    }
+                },
+                {
+                    "targets": 1,
+                    'className': 'col-lg-3 text-center',
+                    "render": function (data, type, full, meta) {
+                        return '<a href="../Home/ViewTableCode?id=' + full.EncId +'" target="_blank">' + full.TableName + '</a>';
+                    }
+                },
+                {
+                    "targets": 2,
+                    'className': 'col-lg-7',
+                    "render": function (data, type, full, meta) {
+                        return '<textarea readonly style="border:none;" cols="90" rows="5">' + full.DbArray + '</textarea>';
+                    }
+                },
+                {
+                    "targets": 3,
+                    'className': 'col-lg-2 text-center',
+                    'sortable': false,
+                    "render": function (data, type, full, meta)
+                    {
+                        return '<ul class="icons-list"> ' +
+                            '<li class="dropdown" >' +
+                            '			<a href="#" class="dropdown-toggle" data-toggle="dropdown">' +
+                            '				<i class="icon-menu9"></i>' +
+                            '			</a>' +
+                            '			<ul class="dropdown-menu dropdown-menu-right"  style="padding-left:5px !important; min-width: 145px !important;">' +
+                            '				<li>' +
+                            '                   <span><a href="../Home/ViewTableCode?id='+full.EncId+'" class="btn btn-sm bg-info icon-eye" target="_blank" title="View Code"></a></span>' +
+                            '                   <button class="btn btn-sm bg-info icon-pencil" onclick="updateFunction(' + full.Id + ')" title="Edit"></button>' +
+                            '                   <button class="btn btn-sm bg-danger icon-bin" onclick="deleteFunction(' + full.Id + ')" title="Delete"></button>' +
+                            '               </li>' +
+                            '			</ul>' +
+                            '		</li >' +
+                            '	</ul >';
+
+                    }
+                },
+            ],
+            "serverSide": "true",
+            "processing": "true",
+            "language":
+            {
+                "processing": "<i class='icon-spinner spinner icon-2x'></i>",
+                "search": "<span>Search :</span> _INPUT_",
+                "searchPlaceholder": "Filter Table Name",
+                "lengthMenu": "<span>Show :</span> _MENU_",
+                "paginate": { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            }
+
+        });
+    }
+
+
+    function updateFunction(id)
+    {
+        $("#loadImg").show();
+
+        $.ajax({
+            type: 'POST',
+            url: "../Ajax/GetCodeById",
+            dataType: "json",
+            data: {
+                id: id
+            },
+            success: function (response)
+            {
+                if (response == 0) {
+                    alert("Record not found");
+                    location.reload();
+                }
+
+                $("#updId").val(response.Id);
+
+                $("#tableName").val(response.TableName);
+                $("#tableColumn").val(response.DbArray);
+
+
+                $("#loadImg").hide();
+                $("#updateModal").modal('show');
+            },
+            error: function () {
+                $("#loadImg").hide();
+
+                alert("ajax Failed");
+            }
+        });
+
+    }
+
+
+    function deleteFunction(id)
+    {
+        $('#confirmModalHeading').text('Warning!');
+        $('#confirmModalHeader').removeClass('bg-success');
+        $('#confirmModalHeader').addClass('bg-danger');
+        $('#confirmModalText').empty();
+        $('#confirmModalText').append('Do you really want to delete this table?<br />' +
+            'This table is going to permanently delete from our system.<br />' +
+            'The action cannot be undone.');
+
+        $("#confirmModalForm").attr("action", "../Home/DeleteTable?id=" + id + "&way=@ViewBag.Way");
+
+        $('#confirmModal').modal('show');
+    }
+</script>
+
+<script>
+    var specialChars = "";
+
+    function validateSpace(data) {
+        specialChars = "<>@@!#$%^&*()+[]{}?:;|'\"\\.,/~`-=";
+
+        if (data.indexOf(' ') > 0) {
+            $('#tableName').val(data.replace(/\s/g, ''));
+        }
+
+        if (check(data) == true) {
+            $('#tableName').val(data.substring(0, data.length - 1));
+        }
+    }
+
+    function validateSpace2(data) {
+        specialChars = "<>@@!#$%^&*()+[]{}?:;|'\"\\./~`-=";
+
+        if (data.indexOf(' ') > 0) {
+            $('#tableColumn').val(data.replace(/\s/g, ','));
+        }
+
+        if (check(data) == true) {
+            $('#tableColumn').val(data.substring(0, data.length - 1));
+        }
+    }
+</script>
+
+<script>
+
+    var check = function (string) {
+        for (i = 0; i < specialChars.length; i++) {
+            if (string.indexOf(specialChars[i]) > -1) {
+                return true
+            }
+        }
+        return false;
+    }
+
+
+</script>
+
+<script>
+    //Used to handle Sidebar links Activeness
+    $('#adminManagetab2').addClass('active');
+</script>
+

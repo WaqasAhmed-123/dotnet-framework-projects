@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "GetStudent";
+}
+
+<h1>
+    Showing Data Using jQuery Ajax Call JSON in ASP.NET MVC
+</h1>
+<div>
+    <table id="tblEmployee" class="tblEmployee">
+        <thead>
+            <img src="/Content/img/Loading.gif" alt="Loading" id="imgLoading" class="Load" />
+        </thead>
+        <tbody id="tblEmployeetbody">
+        </tbody>
+    </table>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function ()
+    {
+        $("#tblEmployeetbodytr").remove();
+        $.ajax
+            ({
+                
+            type: 'POST',
+            url: '@Url.Action("GetStudentData","Default")',
+            dataType: 'json',
+            data: {},
+            success: function(data)
+            {
+            $("#imgLoading").hide();
+            var items = '';
+            var rows = "<tr>" +
+                "<th align='left' class='EmployeeTableTH'>Student ID</th>"+
+                "<th align='left' class='EmployeeTableTH'>Name</th>"+
+                "<th align='left' class='EmployeeTableTH'>Address</th>"+
+                "</tr>";
+            $('#tblEmployeetbody').append(rows);
+
+            $.each(data, function(i, item)
+            {
+            var rows = "<tr>" +
+                "<td class='EmployeeTableTD'>" + item.StudentId + "</td>" +
+                "<td class='EmployeeTableTD'>" + item.StudentName + "</td>" +
+                "<td class='EmployeeTableTD'>" + item.StudentAddress + "</td>" +
+                "</tr>";
+            $('#tblEmployeetbody').append(rows);
+            });
+            },
+            error: function(ex)
+            {
+            var r = jQuery.parseJSON(response.responseText);
+            alert("Message: " + r.Message);
+            }
+            });
+            return false;
+    });
+</script>
+<style type="text/css">
+    .tblEmployee {
+        font-family: verdana, arial, sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+    }
+
+    .EmployeeTableTH {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
+    }
+
+    .EmployeeTableTD {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #ffffff;
+    }
+</style>

@@ -1,0 +1,147 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>SignalR Simple Chat</title>
+
+    <style type="text/css">
+
+        .container {
+            background-color: #99CCFF;
+            border: thick solid #808080;
+            padding: 20px;
+            margin: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <input type="hidden" id="ReceiverId" value="@ViewBag.ReceiverId" />
+    <input type="hidden" id="SenderId" value="@ViewBag.SenderId" />
+
+    <div class="container">
+        <center>User who have Same IDs can see others Texts</center>
+        <input type="text" id="message" autofocus />
+
+        <input type="button" id="sendmessage" value="Send" />
+
+        <ul id="discussion">
+        </ul>
+
+    </div>
+
+
+
+    <script src="~/Scripts/jquery-1.6.4.min.js"></script>
+
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+
+    <script src="~/signalr/hubs"></script>
+
+
+    <script type="text/javascript">
+
+        $(function ()
+        {
+
+            var rid = $('#ReceiverId').val();
+            var sid = $('#SenderId').val();
+
+
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: '@Url.Action("GetChat", "Home")',
+                data: { SenderId: sid, ReceiverId: rid },
+                success: function (response)
+                {
+                    $('#discussion').empty();
+                    var i = 0;
+                    $.each(response, function ()
+                    {
+                        $('#discussion').append('<li class="pull-right"><strong>' + response[i].SenderName + '</strong> :&nbsp;&nbsp;' + response[i].Message + '</li>');
+
+                        i++;
+                    });
+
+                },
+                error: function (response)
+                {
+                    alert('Ajax Error');
+                }
+
+            });
+
+
+            var chat = $.connection.chatHub;
+            $.connection.hub.start().done(function ()
+            {
+                $('#sendmessage').click(function ()
+                {
+                    chat.server.sendMessage(sid, rid, $('#message').val());
+
+                    $('#message').val('').focus();
+                });
+
+            });
+
+
+
+            chat.client.broadcastMessage = function (response, SenderId, SenderName, MessageId, Message)
+            {
+                if (response == "1")
+                {
+                    $('#discussion').append('<li><strong>' + SenderName + '</strong> :&nbsp;&nbsp;' + Message + '</li>');
+
+                    //var lis = document.querySelectorAll('#discussion li');
+                    //for (var i = 0; li = lis[i]; i++) {
+                    //    li.parentNode.removeChild(li);
+                    //}
+
+                    @*$.ajax({
+                        dataType: "json",
+                        type: "POST",
+                        url: '@Url.Action("GetChat", "Home")',
+                        data: { SenderId: sid, ReceiverId: rid },
+                        success: function (response)
+                        {
+
+                            var i = 0;
+                            $.each(response, function ()
+                            {
+                                $('#discussion').append('<li><strong>' + response[i].SenderName + '</strong> :&nbsp;&nbsp;' + response[i].Message + '</li>');
+
+                                i++;
+                            });
+
+                        },
+                        error: function (response)
+                        {
+                            alert('Ajax Error');
+                        }
+
+                    });*@
+                }
+                else
+                {
+                    alert("Message Sending failed!");
+                }
+
+            };
+
+
+        });
+
+    </script>
+
+</body>
+
+</html>

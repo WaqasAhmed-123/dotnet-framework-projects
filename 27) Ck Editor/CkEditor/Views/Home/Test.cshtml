@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <title>CKEditor</title>
+                <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+        </head>
+        <body>
+<textarea cols="80" id="editor1"
+          name="editor1" rows="10" data-
+          sample-shortt>&lt;p&gt;This is 
+  somee &lt;strong&gt;sample 
+  textt&lt;/strong&gt;. You are 
+  usingg &lt;a hreffff=&quot;https://ckeditor.com/&quot 
+  ;&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;. 
+</textarea>
+            <script>
+                CKEDITOR.replace('editor1', {
+                    //removing buttons
+                    removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor'
+                });
+
+                //overriding the bold button
+                CKEDITOR.config.coreStyles_bold = {
+                    element: 'span',
+                    styles: { 'font-weight': 'bold' }
+                };
+
+                
+            </script>
+        </body>
+</html>

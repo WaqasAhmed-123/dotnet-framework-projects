@@ -1,0 +1,132 @@
+﻿@using ScormReading.BL
+@using ScormReading.Models
+@{
+    DatabaseEntities de = new DatabaseEntities();
+
+    var identity = (System.Security.Claims.ClaimsPrincipal)System.Threading.Thread.CurrentPrincipal;
+    var id = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Select(c => c.Value).SingleOrDefault();
+    User loggedinUser = new UserBL().GetUserById(Convert.ToInt32(id), de);
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Course Result</title>
+
+    <style>
+        .btn {
+            border: 1px solid blue;
+            padding: 5px;
+            border-radius: 2px;
+            text-decoration: none;
+            color: white;
+            background-color: cornflowerblue;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+
+        <div>
+            <span class="btn" style="float:left; background-color:pink;">@loggedinUser.Name</span>
+            <a href="@Url.Action("Logout","Auth")" class="btn" style="float:right">logout</a>
+        </div>
+
+        <br />
+        <center><h3><u>My Courses</u></h3></center>
+
+
+        <center>
+
+            <div style="font-weight:bold; color:red;">
+
+                @ViewBag.Message
+            </div>
+            <br />
+            <div>
+                <table border="1">
+                    <thead>
+                        <tr style="font-weight:bold; color:white; background-color:cornflowerblue;">
+                            <th>Nr #</th>
+                            <th style="width:200px;">Course Title</th>
+                            <th>Course Completion</th>
+                            <th>Quiz Result</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{
+                            List<UserCourse> ucList = new UserCourseBL().GetActiveUserCourseList(de).Where(x => x.UserId == loggedinUser.Id).ToList();
+                            int nr = 1;
+                            foreach (UserCourse uc in ucList)
+                            {
+                                <tr>
+                                    <td>@nr</td>
+                                    <td>@uc.CourseTitle</td>
+                                    <td>@uc.percentageCompleted %</td>
+                                    <td>
+                                        @if (uc.IsCompleted == 1)
+                                        {
+                                            if (uc.IsPassed == 1)
+                                            {
+                                                <span>@uc.Result Pass</span>
+
+                                            }
+                                            else
+                                            {
+                                                <span>@uc.Result% Fail</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>Not Attempted</span>
+                                        }
+                                    </td>
+                                    <td style="padding:10px;">
+                                        @if (uc.IsCompleted != 1)
+                                        {
+                                            <span>
+
+                                                <a href="@uc.CourseLink" class="btn" target="_blank">Open</a>
+                                                <a href="@Url.Action("DeleteUserCourse","Home", new { id = uc.Id})" onclick="confirmDlt()" class="btn">Delete</a>
+                                            </span>
+
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("DeleteUserCourse","Home", new { id = uc.Id})" class="btn">Delete</a>
+                                        }
+                                    </td>
+                                </tr>
+                                nr++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <br />
+            <div>
+                <a href="@Url.Action("Index","Home")" class="btn">Back</a>
+            </div>
+        </center>
+    </div>
+
+    <script>
+        function confirmDlt() {
+            if (confirm("Do you really want to delete record!") == true) {
+                return true;
+            } else {
+                event.preventDefault()
+            }
+        }
+    </script>
+</body>
+</html>

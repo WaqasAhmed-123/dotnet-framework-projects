@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+}
+
+<div class="page-content">
+    <br />
+    <div class="row">
+        <h1 class="page-header"><strong>Single Payment</strong></h1>
+    </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-5 col-sm-6">
+                <p class="text-center" color: #FA541F;"><strong>@ViewBag.message</strong></p>
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">
+                        <center><h3 class="panel-title">Payment Details</h3></center>
+                    </div>
+
+                    <div class="panel-body">
+                        <form method="post" action="@Url.Action("PostSinglePayment", "Account")">
+
+                            <div class="row">
+
+                                <div class="col-xs-6 col-md-10">
+                                    <div class="form-group">
+                                        <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-2 col-lg-offset-2">
+                                            <div id="payment-form"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <center><button type="submit" class="btn btn-lg btn-primary">Pay $10 Now</button></center>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <br />
+            </div>
+
+        </div>
+
+
+    <br />
+</div>
+
+
+<script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
+<!-- Load the client component. -->
+<script src="https://js.braintreegateway.com/web/3.14.0/js/client.min.js"></script>
+<!-- Load the PayPal Checkout component. -->
+<script src="https://js.braintreegateway.com/web/3.14.0/js/paypal-checkout.min.js"></script>
+<div id="paypal-button"></div>
+<!-- Load the Client component. -->
+<script src="https://js.braintreegateway.com/web/3.14.0/js/client.min.js"></script>
+<!-- Load the Hosted Fields component. -->
+<script src="https://js.braintreegateway.com/web/3.14.0/js/hosted-fields.min.js"></script>
+<script src="https://js.braintreegateway.com/js/braintree-2.32.0.min.js"></script>
+<script>
+braintree.setup('@System.Web.HttpContext.Current.Session["token"]', "dropin", {
+       container: "payment-form"
+   });
+</script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>

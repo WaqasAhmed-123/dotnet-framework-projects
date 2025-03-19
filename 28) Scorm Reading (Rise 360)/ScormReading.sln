@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScormReading", "ScormReading\ScormReading.csproj", "{E3D621CD-6F41-4F0F-8A46-E8AFB37CA5CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3D621CD-6F41-4F0F-8A46-E8AFB37CA5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3D621CD-6F41-4F0F-8A46-E8AFB37CA5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3D621CD-6F41-4F0F-8A46-E8AFB37CA5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3D621CD-6F41-4F0F-8A46-E8AFB37CA5CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {68BBF53E-7731-4475-B374-0BF2D63B48D3}
+	EndGlobalSection
+EndGlobal
