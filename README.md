@@ -1,13 +1,15 @@
 # ASP.NET MVC Framework Learning Projects
-
 This repository contains various learning projects built using the **ASP.NET MVC Framework**. Each project showcases different aspects of ASP.NET MVC, including routing, controllers, views, models, authentication, and database interactions.
 
 ## Note
 Project Content folder is placed at main directory labelled as "0) content".
-## About
-These projects were created as part of my journey to master **ASP.NET MVC Framework**. They cover a range of concepts, from basic CRUD operations to advanced features like authentication and dependency injection.
 
-## 🚀 Projects Included
+## About
+This repository contains a collection of ASP.NET MVC Framework learning projects, covering essential concepts like CRUD operations, authentication, real-time communication, payment integration, and file handling. Each project demonstrates a specific functionality useful for real-world applications.
+
+Key topics include **Entity Framework, jQuery, AJAX, OAuth, SignalR, third-party APIs (Stripe, Twilio, Google Maps), file handling (Excel, PDF), and SCORM integration. This repo serves as a reference for learning and mastering ASP.NET MVC**.
+
+## Projects Included
 
 1. **Basic CRUD** - A simple CRUD application using Entity Framework.
 2. **Ajax Practice** - Implementing AJAX calls to enhance user experience.
@@ -41,7 +43,7 @@ These projects were created as part of my journey to master **ASP.NET MVC Framew
 30. **.NET Framework Code Generator** - Automatically generating code for .NET applications.
 31. **PDF Forms** - Creating and handling PDF forms in an MVC application.
 
-## 🛠 Technologies Used
+## Technologies Used
 - **ASP.NET MVC Framework**
 - **C#**
 - **Entity Framework**
@@ -56,23 +58,24 @@ These projects were created as part of my journey to master **ASP.NET MVC Framew
 - **MailGun API**
 - **SCORM (Rise 360)**
 
-## 🔧 Setup Instructions
+## Setup Instructions
 1. Clone the repository:
    ```sh
    git clone https://github.com/your-username/aspnet-mvc-learning-projects.git
    ```
 2. Open the solution in **Visual Studio**.
-3. Restore NuGet packages and build the project.
+3. Restore NuGet packages (_dotnet restore_) and build the project.
 4. Update the **connection string** in `web.config` to match your SQL Server setup.
 5. Run database migrations (if applicable):
    ```sh
    Update-Database
    ```
-6. Run the application using IIS Express or Kestrel.
+6. Run the application.
 
-## 📂 Project Structure
+## Project Structure
 ```
-/aspnet-mvc-learning-projects
+/dotnet-framework-projects
+│── /content
 │── /BasicCRUD
 │── /AjaxPractice
 │── /OwinPractice
@@ -107,16 +110,11 @@ These projects were created as part of my journey to master **ASP.NET MVC Framew
 │── README.md
 ```
 
-## 📜 License
+## License
 This project is open-source and available under the **MIT License**.
 
-## 🙌 Contributing
-Feel free to fork this repo and submit **pull requests** if you have improvements or additional learning projects to add.
-
-## 📬 Contact
+## Contact
 For any queries, reach out via:
-- GitHub: [your-username](https://github.com/your-username)
-- Email: your-email@example.com
+- GitHub: [WaqasAhmed-123](https://github.com/WaqasAhmed-123)
+- Email: waqaxahmed786@gmail.com
 
----
-🚀 Happy Coding!
