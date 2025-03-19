@@ -61,7 +61,7 @@ Key topics include **Entity Framework, jQuery, AJAX, OAuth, SignalR, third-party
 ## Setup Instructions
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/aspnet-mvc-learning-projects.git
+   git clone [https://github.com/your-username/aspnet-mvc-learning-projects.git](https://github.com/WaqasAhmed-123/dotnet-framework-projects.git)
    ```
 2. Open the solution in **Visual Studio**.
 3. Restore NuGet packages (_dotnet restore_) and build the project.
