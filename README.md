@@ -2,7 +2,9 @@
 
 This repository contains various learning projects built using the **ASP.NET MVC Framework**. Each project showcases different aspects of ASP.NET MVC, including routing, controllers, views, models, authentication, and database interactions.
 
-## 📌 About
+## Note
+Project Content folder is placed at main directory labelled as "0) content".
+## About
 These projects were created as part of my journey to master **ASP.NET MVC Framework**. They cover a range of concepts, from basic CRUD operations to advanced features like authentication and dependency injection.
 
 ## 🚀 Projects Included
