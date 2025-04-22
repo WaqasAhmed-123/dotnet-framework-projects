@@ -1,0 +1,107 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Snap Picture</title>
+    
+    <style type="text/css">
+
+        body {
+            font-family: Helvetica, sans-serif;
+        }
+
+        h2, h3 {
+            margin-top: 0;
+        }
+
+        form {
+            margin-top: 15px;
+        }
+
+            form > input {
+                margin-right: 15px;
+            }
+
+        #results {
+            width: 320px;
+            margin-left: 580px;
+            padding: 20px;
+            border: 1px solid;
+            background: #ccc;
+        }
+
+        #on: onclick {
+            visibility: hidden;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+
+    <h1 align="center">Snap Your Image</h1>
+
+    <button onClick="this.style.visibility='hidden'; openCamera()"  id="on" style="margin-left:710px;">Open Camera</button>
+    <br />
+    <br />
+
+    <div id="my_camera" style="margin-left:600px;"></div>
+    <br />
+    
+    <!-- A button for taking snaps -->
+    <button onClick="take_snapshot()" style="margin-left:710px;">Take Snapshot</button>
+
+    <br />
+    <br />
+    <div id="results">Your captured image will appear here...</div>
+
+    
+    
+    
+    <!-- First, include the Webcam.js JavaScript Library -->
+    <script type="text/javascript" src="~/Content/webcam.min.js"></script>
+    <!-- First, include the Webcam.js JavaScript Library -->
+
+    <script>
+
+        //Setting of capruted Image
+        function openCamera()
+        {
+            Webcam.set(
+                {
+                    width: 320,
+                    height: 240,
+                    image_format: 'jpeg',
+                    jpeg_quality: 90,
+                    flip_horiz: true
+                });
+
+            Webcam.attach('#my_camera');
+        }
+
+
+        //Code to handle taking the snapshot and displaying it locally
+        function take_snapshot()
+        {
+            // take snapshot and get image data
+            Webcam.snap(function (data_uri)
+            {
+                // display results in page
+                document.getElementById('results').innerHTML =
+                    '<h2 align="center">Your Profile Picture</h2>' +
+                '<img src="' + data_uri + '"/>' + 
+                '<form action="@Url.Action("PostIndex", "Home")" method="post"> <Textarea Style="Display:none;" name="ImgUrl">' + data_uri + '</Textarea> <input Style="Margin-left:130px;" type="Submit" value="Save" /> </form>' ;
+            });
+        }
+    </script>
+
+</body>
+</html>

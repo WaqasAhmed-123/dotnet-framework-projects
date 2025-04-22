@@ -1,0 +1,50 @@
+CREATE TABLE [dbo].[User] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [Name]      VARCHAR (255) NULL,
+    [Email]     VARCHAR (255) NULL,
+    [Password]  VARCHAR (255) NULL,
+    [Role]      INT           NULL,
+    [IsActive]  INT           NULL,
+    [CreatedAt] DATETIME      NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+------------------------------------------
+
+
+CREATE PROCEDURE [dbo].[sp_GetAllUser]
+	
+AS
+	SELECT * FROM [User]
+
+
+
+
+
+CREATE proc sp_GetUserList
+@searchValue varchar(255) = null,
+@start int,
+@length int
+As 
+Begin
+SELECT [t1].[Id], [t1].[Name], [t1].[Email], [t1].[Password], [t1].[Role], [t1].[IsActive], [t1].[CreatedAt]
+FROM (
+		SELECT ROW_NUMBER() OVER (ORDER BY [t0].[Id], [t0].[Name], [t0].[Email], [t0].[Password], [t0].[Role], [t0].[IsActive], [t0].[CreatedAt]) AS [ROW_NUMBER], [t0].[Id], [t0].[Name], [t0].[Email], [t0].[Password], [t0].[Role], [t0].[IsActive], [t0].[CreatedAt]
+		FROM [User] AS [t0]
+		WHERE ([t0].[IsActive] = 1) AND ((@searchValue is null) OR [t0].Name like @searchValue or [t0].Email like @searchValue or [t0].Password like @searchValue)
+    ) AS [t1]
+WHERE [t1].[ROW_NUMBER] BETWEEN @start + 1 AND @start + @length
+ORDER BY [t1].[ROW_NUMBER]
+OPTION (RECOMPILE)
+END
+
+
+
+CREATE proc sp_GetUserCount
+@searchValue varchar(255) = null
+As 
+Begin
+SELECT Count(case [t0].[IsActive] when 1 then 1 else null end) AS Id, 'test' as Name, 'abc@gmail.com' as Email, '123' as Password, 1 as Role, 1 as IsActive, GETDATE() as CreatedAt
+FROM [User] AS [t0]
+WHERE ([t0].IsActive=1) AND ((@searchValue is null) OR [t0].Name like @searchValue or [t0].Email like @searchValue or [t0].Password like @searchValue)
+END

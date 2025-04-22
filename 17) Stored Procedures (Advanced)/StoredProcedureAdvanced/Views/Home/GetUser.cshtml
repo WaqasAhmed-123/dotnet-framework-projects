@@ -1,0 +1,150 @@
+﻿@using StoredProcedureAdvanced.BL
+@using StoredProcedureAdvanced.Models
+@{
+    ViewBag.Title = "GetUser";
+    Layout = null;
+}
+
+@{
+//DatabaseEntities de = new DatabaseEntities();
+
+//for (int i = 100001; i <= 200000; i++)
+//{
+//    User obj = new User()
+//    {
+//        Name = "name" + i,
+//        Email = "email" + i,
+//        Password = "123",
+//        IsActive = 1,
+//        CreatedAt = DateTime.Now
+//    };
+
+//    new UserBL().AddUser(obj, de);
+//}
+
+//de.SaveChanges();
+}
+
+
+
+
+<div style="min-height:700px">
+
+    <br />
+    <br />
+    <div style="color:@ViewBag.Color">@ViewBag.Message</div>
+    <center style="">
+        <form action="@Url.Action("AddUsers","Home")" method="post" style="padding: 10px; border: 1px solid black; width: 500px">
+            <label>User Count</label>
+            <br />
+            <input type="number" min="2" step="1" name="count" required />
+            <input type="submit" value="Add"/>
+        </form>
+    </center>
+
+    <div class="text-center text-bold text-size-large">
+        <u>Users' Record</u>
+    </div>
+    <br />
+    <div style="width:700px; margin-left:400px;">
+
+        <table class="table no-footer " id="example" >
+
+            <thead class="bg-blue-800">
+                <tr>
+                    <th>
+                        Name
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Password
+                    </th>
+
+                </tr>
+            </thead>
+
+        </table>
+
+
+
+    </div>
+
+
+
+</div>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+
+<script>
+
+    $('#example').DataTable(
+    {
+        "ajax":
+        {
+            "url": '@Url.Action("GetUserDatatable", "Home")',
+            "type": "POST",
+            "datatype": "json"
+        },
+        "columns":
+        [
+
+            { "data": "Name", "name": "Name" },
+            { "data": "Email", "name": "Email" },
+            { "data": "Password", "name": "Password" }
+        ],
+        'columnDefs':
+        [
+            {
+                "targets": 0,
+                'className': 'col-lg-4',
+
+                "render": function (data, type, full, meta)
+                {
+                    return '<span>' + full.Name + '</span>';
+                }
+            },
+            {
+                "targets": 1,
+                'className': 'col-lg-4',
+
+                "render": function (data, type, full, meta)
+                {
+                    return   full.Email ;
+                }
+            },
+            {
+                "targets": [2],
+                'className': 'col-lg-4',
+
+                "render": function (data, type, full, meta)
+                {
+                    return '<span>' + full.Password + '</span>';
+                }
+            },
+
+        ],
+        "serverSide": "true",
+        "processing": "true",
+        "language":
+        {
+            "processing": "<img src='../Content/loading.gif' width='150'/>"
+        }
+
+    });
+
+
+
+
+</script>
+
+

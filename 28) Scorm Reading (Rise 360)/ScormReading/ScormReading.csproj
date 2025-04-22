@@ -1,0 +1,1027 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E3D621CD-6F41-4F0F-8A46-E8AFB37CA5CD}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ScormReading</RootNamespace>
+    <AssemblyName>ScormReading</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44392</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.2.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.2.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.2.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="BL\UserCourseBL.cs" />
+    <Compile Include="BL\UserBL.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAL\UserCourseDAL.cs" />
+    <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helping_Classes\GeneralPurpose.cs" />
+    <Compile Include="Models\Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserCourse.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Database.mdf" />
+    <Content Include="App_Data\Database_log.ldf">
+      <DependentUpon>Database.mdf</DependentUpon>
+    </Content>
+    <Content Include="Content\Course10\assets\--Y4_XJE9YyoUSIl_transcoded-BKcYYmA5rTc0LLpL-GLUTE TALK Todd Smith--00001.png" />
+    <Content Include="Content\Course10\assets\-g81XnaT6dMf_X7__transcoded-tGhZnf_HmAVsXCjA-glute Hip abduction.mp4" />
+    <Content Include="Content\Course10\assets\0XIO2UZIHDkRya7M_transcoded-tGhZnf_HmAVsXCjA-glute Hip abduction-00001.png" />
+    <Content Include="Content\Course10\assets\1XTaIBAs_m1CCwHl_transcoded-JhRseVmdx8PTKYFo-glute band walk.mp4" />
+    <Content Include="Content\Course10\assets\28m9TqI_D4Pt7pWb_transcoded-78xDmU6BafahLZrj-glute activation 2-00001.png" />
+    <Content Include="Content\Course10\assets\2m64CC61BWU3ZGNe_quote_background.jpg" />
+    <Content Include="Content\Course10\assets\9un0TuNRDKCvclky_transcoded-JhRseVmdx8PTKYFo-glute band walk-00001.png" />
+    <Content Include="Content\Course10\assets\B3tSwVUYwvUqK1gL_transcoded-C3j2DXsBfaqE5djc-glute activation 1-00001.png" />
+    <Content Include="Content\Course10\assets\cMwFOvRXQDWN543G_AovmvWSx5t6som3c.jpg" />
+    <Content Include="Content\Course10\assets\HgW9goJDUIjwN17M_r2skOWvGhQwHqpGk.jpg" />
+    <Content Include="Content\Course10\assets\JWUVaNZKPiVTOhZ3_transcoded-78xDmU6BafahLZrj-glute activation 2.mp4" />
+    <Content Include="Content\Course10\assets\O0a8HLT9_6nYHMZ5_transcoded-C3j2DXsBfaqE5djc-glute activation 1.mp4" />
+    <Content Include="Content\Course10\assets\QRc8V0fBpG9B2TVd_WfXWVcSCejrIWRky.jpg" />
+    <Content Include="Content\Course10\assets\R4Uc3pHIQqFypq82_small_1578249366.png" />
+    <Content Include="Content\Course10\assets\SFjQEVCs9pWAOPpn_transcoded-BKcYYmA5rTc0LLpL-GLUTE TALK Todd Smith-.mp4" />
+    <Content Include="Content\Course10\assets\zn22vfH1HPRAClYp_2J17foHlSKR9835T.jpg" />
+    <Content Include="Content\Course10\goodbye.html" />
+    <Content Include="Content\Course10\template.html" />
+    <Content Include="Content\Course10\index.html" />
+    <Content Include="Content\Course10\lib\icomoon.css" />
+    <Content Include="Content\Course10\lib\lzwcompress.js" />
+    <Content Include="Content\Course10\lib\main.bundle.css" />
+    <Content Include="Content\Course10\lib\main.bundle.js" />
+    <Content Include="Content\Course10\lib\player-0.0.11.min.js" />
+    <Content Include="Content\Course1\imsmanifest.xml" />
+    <Content Include="Content\Course1\metadata.xml" />
+    <Content Include="Content\Course1\scormcontent\assets\-EJj9sYiff_gQIvY_089_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\-HQloaVpFebc_T0V_3G9_gZkxyt1QKOb8.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\0Kt_GhhXrPbC5RJ6_1A-CgfhkOw8OG3tp-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\1yLecMDJ0Vx8UA-P_120_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\2FgLaStV1h_HFSdn_iS_tC3tACORAMHso-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\2krW08c1uEESdYl3_175_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\4EEG5teTLuUUVlLK_156_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\4u_bfFL2ioBgAnTH_089_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\5bgggr8FHwtoimC0_t_Lo2Yh2Tp1yDqt7-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\5ctj04sbeFAqPdSR_eh0HZ_I5kNhWgRF7-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\5PD5-XGyHS7qk22T_188_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\600j42z50Tx8Jg4-_153_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\6Dxxujw1wZx-wIpr_OrKokpGJhXs7GmN5-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\6W5Q5pADOZpmnDBV_068_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\6x90bSn5SeOJcqQi_iDlOBBaujEGxOemJ-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\71CIICArnhkMt439_210_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\7nJ4K1Eqq_4SUOI5_78_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\7TTZiuH_QV8AAQ-q_201_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\8LdiAX9fKz9vqzP4_208_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\9MBRzIXBi_T_BK0I_088_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\A1mvqb_iXnjcON0K_123_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\B0wSbLRNSul-tzmm_159_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\B3dmUJ0Psfnmq5dQ_102_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\b7wSjGw3V64x13DI_215_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\BPTkg3aIONqgOxxi_Hn80Nss3vp0xl_e--stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\C4anS_5lxNDFK6H__116_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\Cld4ki3perEb6XE9_mountains.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\D2Ct2bd62yCjcs2Y_214_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\dFc2nsoqs_d29Lrs_87_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\dWqkn0h-k0HsY4bt_170_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\D_rUMdm-iltQIvRT_mjXPpIsyUr2C_G4X-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\EMPCY1yrkSFZwW67_agency.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\EQQWw0DCEXRwGBvI_cSepzcdOwYP8Sk2l-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\eRibQpNUw8rgvhHf_uoEqbTZyWXzjhLzY-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\EXA2DS2sGnm2a0G1_184_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\fD2I3CqduoIdO_D4_104_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\FvG9zGAReNIlR80g_138_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\GM8MnPEXG63nH3CC_7UyxCysQsT-XOeKg-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\gnLJwkq2YOHZb0rU_143_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\gPheiJsuHScmoHYx_189_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\GTI0hmcs1sV4S9Cs_gmXs_ldO66B4TPcy-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\h8edH8wzzI9Iw6wD_061_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\HbBMZXapcFEc4z4o_141_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\hdtLrDnG9iKaqjwM_049_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\ht_qMD3RneSCtU2B_140_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\icqEStr30ANBpDrY_275_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\ilaTFBe_nmmERz8h_183_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\KlsKIXFkz3fKjb2A_small.png" />
+    <Content Include="Content\Course1\scormcontent\assets\kOIf6PgrjuXLeKk3_056_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\KUSbFlHrhpA-Z2ba_198_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\lGNFQVyrAtuyTjn7_183_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\LVrP4EkL8Br1OXE6_162_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\mu0htzTBxhYlmdY6_sB57W2cRUFcp5C94-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\N4YQO3oj9OWbqdyZ_117_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\NFXqiU7x-T4vGWE7_151_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\NMIkvxEtnrt4fWhm_aq6ES4Tx7C-G3z4_-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\Nnhqy6xLTsvywsgh_200_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\p7gwRSHc3myyXWpQ_95_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\Pfb3GiCJOzMBK92P_79_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\pk12uuWPZKPhj7xC_jQ6fi6gURs3LpFzq-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\PkI16XorN6eDBeAo_096_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\PSiMp4xsBQwVa6MH_zmILk64KU0spCURE-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\SE5WkYCib6DWwF9L_168_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\sJkeuT3bD6S1XtXA_4jAxC1WvPXGy3fZ1-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\tAWOnzqXdcVjOmX-_103_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\TSMeJRZ3zMvsd4HF_LOng1_8NcnvscjV4-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\U09-ndZ31oldYasN_81_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\uJgvYdp0tGU6oVBy_092_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\UKarqUD6DKN7SKWw_205_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\USMO4ug0SoWyE4wp_67f7trmlkpH-zyTK-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\UVlJVg3iNWXmCsVI_k7pnx83ZMe2DqT3X-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\uwPU6DBbBva_8xGE_BJdE7cjSj1o4jMAX-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\VsD6zzL2dGucbtcl_194_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\w-7m7UR7NIS6tvoL_txWQ6CueoK0q2pjw-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\W8eQrwaeRrDRPWMB_192_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\WjuYYIjp4MjeuW7d_77_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\WydwBappFJW1G27c_t-CMo0hFAdLFKQQp-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\X2yq0KRAozhAG82u_218_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\XbaV2ThkV7XcoM3Z_107_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\XH2hs2K4n6eWIVhS_167_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\xM58WA-BDyeYkTAR_184_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\XO4HCooanTKsFdXV_178_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\xxCo5z3vObmDdQ25_uVihB25khJBRy70Z-stock-image.jpg" />
+    <Content Include="Content\Course1\scormcontent\assets\yeU7inhmpq3PKITh_166_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\YXu1NSObi6UUQ2zM_153_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\ZJaJKyagadxZvGm__170_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\ZsBsCRng2N-usgA-_120_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\_4srpQm9jnJjRBrZ_185_full.png" />
+    <Content Include="Content\Course1\scormcontent\assets\_v_NdIlyyyecf40p_quote_background.jpg" />
+    <Content Include="Content\Course1\scormcontent\index.html" />
+    <Content Include="Content\Course1\scormcontent\lib\icomoon.css" />
+    <Content Include="Content\Course1\scormcontent\lib\lzwcompress.js" />
+    <Content Include="Content\Course1\scormcontent\lib\main.bundle.css" />
+    <Content Include="Content\Course1\scormcontent\lib\main.bundle.js" />
+    <Content Include="Content\Course1\scormcontent\lib\player-0.0.11.min.js" />
+    <Content Include="Content\Course1\scormdriver\AICCComm.html" />
+    <Content Include="Content\Course1\scormdriver\auto-scripts\AutoBookmark.js" />
+    <Content Include="Content\Course1\scormdriver\auto-scripts\AutoCompleteSCO.js" />
+    <Content Include="Content\Course1\scormdriver\auto-scripts\CourseExit.js" />
+    <Content Include="Content\Course1\scormdriver\blank.html" />
+    <Content Include="Content\Course1\scormdriver\browsersniff.js" />
+    <Content Include="Content\Course1\scormdriver\driverOptions.js" />
+    <Content Include="Content\Course1\scormdriver\goodbye.html" />
+    <Content Include="Content\Course1\scormdriver\indexAPI.html" />
+    <Content Include="Content\Course1\scormdriver\preloadIntegrity.js" />
+    <Content Include="Content\Course1\scormdriver\scormdriver.js" />
+    <Content Include="Content\Course2\imsmanifest.xml" />
+    <Content Include="Content\Course2\metadata.xml" />
+    <Content Include="Content\Course2\scormcontent\assets\-nU60oMKitDCHT6D_QOgXjy1b_OeE3m3q.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\0g2jVEKlE2P_iMrj_203_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\0Jgr3u2f_c8SfUOl_9DA0VzeSt00iqZXT.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\0rtx5pFHP8L-OZX-_277_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\0tE6OCyuF6TaCePS_D6EI2VL9Mn_hW_0Y.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\1D7kNJVFJ_b44vFA_312_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\1iNGrh1I7rSxWGA0_Tee5yBkPQZKsej9q.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\1jYs0jP5CjYSJm_X_202_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\2s5elxWYUdKAz-So_ViVSA5vlymWIdKCz.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\2uZoHOeEK7dn8Cwf_6hl7izgYxqTBbyhp.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\3jwgrcCjyi3rK4KS_u7col9lWkglM2Z4I.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\56QGFtWEUT2tIJBl_veSmmv0dhKu8ENdg.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\58QVZhTYxUJJvy30_PG7eIfZ8z2EljeEF.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\5AGPVBR8XT2WH97l_198_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\5OP6qkFh0tg_-PYB_TZUyMNqJPMm7grkO.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\6-ZtdC_yYedmcIp5_qmCHmk5lNVN0X4gu.png" />
+    <Content Include="Content\Course2\scormcontent\assets\6Y_RwgBRF6lx3fB9_AGkv0zwyjSymgNzc.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\74MJ6naE3A6eoGiA_gGzinVUDu7Ye5Miq.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\7LvEA6yaOgDnbG51_215_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\7Qd68pR5hQtFMnhD_2AaxR1XuK5BneDUR.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\7_f71gNxcmhm7z_W_avatar.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\8hyKlvXra9wthqsn_219_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\9Kwf1uGF2h0HnV0U_lLj2qLS54rK16cIB.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\9rEy95lHy8Sml_L1_269rrirImwCTS7XR.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\acRrbKHxNAr41Efv_187_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\adFyGsPjph9HpZ-Y_171_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\aEEfyYHd2ZAMH908_4ohmdlzQN94Jy7uI.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\AI4qAXPJ6wnM9gE8_mountains.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\aniqfNO9rN--3fyf_small.png" />
+    <Content Include="Content\Course2\scormcontent\assets\APuVgPDeCVXx8NPP_83Ag8CrXlJ3uvXZ0-stock-image.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\BSicq0hiAY03DpBv_222_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\cAjE4X-tdYB0RpnG_M6oBwM-fXgO4Y1WA.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\CR45YDxzyoUpYuv7_hotel.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\CzFCtR9djGbB2ruK_DqLx67QbKNtiBApa.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\D4oCcAo5c7a5w4kO_NADPrsGxoTNjTukP.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\Dl8tG6Cnvm_54wVU_162_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\dReoSL_wcie6AJdG_264_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\dWEk0y0lyvoHc6D2_106_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\dXBEqK5XHlR_R30F_quote_background.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\e5QTNcu7h8aWhY-Q_291_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\EhrFTj3Mq1QyFCrc_ciqm7HY4C3W6ZzXk.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\eoN4E9F7ON1dWImq_8ZXHczAI3tbQvacy.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\eZVoghRw3GBPqCbm_rWTR7vH96sA-oopz.png" />
+    <Content Include="Content\Course2\scormcontent\assets\e_6H8B89Azjq1YAD_LqpXfX9sMOHTl2G6.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\fNZx6AbF3F7e8642_281_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\FQs-1JDicRk0AuVE_HLo26R5KHnxNEkzH.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\gECHLGJAPbyJQAR3_209_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\GmHnG-dr1xAQ0K9u_dx0wgWpmCIhFCrVF.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\GxpbJz0MhmaGyFoy_149_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\H8NpxFNx1MOUiNy__125_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\hKDkD-outWY3D59m_185_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\HMqrIKHWhBWIFZlm_282_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\hOvmW1umx2zAiYdO___xlHoTXEKblZzef.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\hZpukJ7OTIPI0hrj_310_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\iLnZOGI5lZrl4qiP_7ACFJs2dWULCm57c.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\iywikbY-xz1sKFIz_284_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\j6X7vFUglpuKLr52_KsFFSBC92ap6IzLr.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\je5TE5deqj6uSdHR_hm2LK8UvKH3v6b6I.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\kgJIzmSeSF7NxYwG_DYoN1f-qDwdCqN3_.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\kj6e6r_nRftTG1qr_122_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\KoRwGHpQJFwgNGLm_166_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\krxtJdDz0dvhPIMo_194_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\L-KXF_gv-E0zQRJk_144_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\LfuFRkEIjgV8KqtU_W-QNy__VeOvAm_QC.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\m4YKLk3CAtOvPUul_A1B8EcaXUgtzx7mt.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\mMOCkC5V-u1nmpGd_XKIXGWvKWUCiERU3.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\Mp3o_8bX7uQkwSza_193_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\n01cWnmCe9C27-BT_YlwZcHPZU7zkpcqc.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\nsTtR2quCMbTHa17_4WWfw02ay2MCbFFk.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\O1IhKfLw1oU5JnZS_DBuyj685_lNT9xOe.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\OcTT99KGPMk09JgX_brickroom.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\oeXcN5iUJVadNhqx_158_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\okp606GQZ2KsZrxa_-9X4QxccntmIFM2s.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\oN3xHibvvK2986Cm_q8vHrdTxQZcXlpvO.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\OQTsPeXCr5lMNfvM_xZAGpOmZiLtHZ7ZA.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\PfVQETG-8xsDpR0q_classroom.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\ptbw0aaYlitEbQjp_303_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\qGixDC4jEQzyC6zo_OU91982WlqRvWkb3.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\QlIg4tI4CQNGP4Ep_197_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\qY7nzKnizTdEysYg_261_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\qZQ-bEkT_IZcJd8n_274_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\RGCXpaiuJDnWzeMv_ojowzQ5xXP47-zfN.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\SbAf9od3Bds2ur9l_zbLIwZDyagwBVQC9.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\Scb_kV54BkbaXOpJ_MYeudWc1SImPw2Go.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\ShLNQFXMzy258L3i_218_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\SNQD3V0u_VZv65kX_vMus5czATDQIyGDO.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\SP4UrUSoCPUTnv-T_jIQka_cOiEnjPBcF.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\sVZZy8sDHlHH7MbL_lFooW6hjA_3-jaUV.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\S_B2ASROBHiDhbS0_XqGZVACPzREC41s_.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\tDzSw0Poxeq5SBRo_8b_-GSET4VP06V_Q.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\TlB6ozvmCGGHwo2D_aWUhZfT_MgB07IN1.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\t_hHQbTvXenllRjc_220_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\uLcajV13yiTWGrtN__eJRBShihcNW9yJb.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\vztifPtWNajCXEUZ_376_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\W3E0DpE-KIXdLEmy_107_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\We_I77JGEbjQCvgq_xxMdjhuRXoiJN6aJ.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\wJ0qVwptf1z7_uaz_140_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\x-EwpSTzOfX0Dbqd_kj-NWaMETzmEjpik.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\xItH0H15svQy0sbU_1YGjQeKJxIm3Tkzh.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\xJzTVmq90Y_xjEP0__xqQXj5GfaLY3LdE.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\XMnvKeMU4ypj4AMa_scFHBAyOlKDqIYeJ.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\xtsgCly9uyt3AFUY_yxgVR30-dzaoXElk.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\YdEJS60vzfmkNsjh_128_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\yYT7MGvICqzmW9P5_156_full.png" />
+    <Content Include="Content\Course2\scormcontent\assets\z7SBi-G0xyYQl9Nm_dIIHfw-XjcrU8PWx.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\ZCHFrHd0eFH1PtEj__A7GgF8UuODJLAOJ.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\zdgpKi-m-HP0P7br_v9zvno1vL_C7tUa9.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\zWifO4ntdpnEdeSq_ZRXJypDZ2VJCO-bE.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\_aItm_h6wWIriBQh_E3uRkK14W_W3FXbV.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\_ghrnNs2yQgdKjYp_08YBTIx2gXiOWqFq.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\_GNSREHf_qaxaam3_KJCdTPHSJN3cbhgl.jpg" />
+    <Content Include="Content\Course2\scormcontent\assets\_OldF-56SN42lPbB_u-rehNl-U9KVZ-SM.jpg" />
+    <Content Include="Content\Course2\scormcontent\index.html" />
+    <Content Include="Content\Course2\scormcontent\lib\icomoon.css" />
+    <Content Include="Content\Course2\scormcontent\lib\lzwcompress.js" />
+    <Content Include="Content\Course2\scormcontent\lib\main.bundle.css" />
+    <Content Include="Content\Course2\scormcontent\lib\main.bundle.js" />
+    <Content Include="Content\Course2\scormcontent\lib\player-0.0.11.min.js" />
+    <Content Include="Content\Course2\scormdriver\AICCComm.html" />
+    <Content Include="Content\Course2\scormdriver\auto-scripts\AutoBookmark.js" />
+    <Content Include="Content\Course2\scormdriver\auto-scripts\AutoCompleteSCO.js" />
+    <Content Include="Content\Course2\scormdriver\auto-scripts\CourseExit.js" />
+    <Content Include="Content\Course2\scormdriver\blank.html" />
+    <Content Include="Content\Course2\scormdriver\browsersniff.js" />
+    <Content Include="Content\Course2\scormdriver\driverOptions.js" />
+    <Content Include="Content\Course2\scormdriver\goodbye.html" />
+    <Content Include="Content\Course2\scormdriver\indexAPI.html" />
+    <Content Include="Content\Course2\scormdriver\preloadIntegrity.js" />
+    <Content Include="Content\Course2\scormdriver\scormdriver.js" />
+    <Content Include="Content\Course3\imsmanifest.xml" />
+    <Content Include="Content\Course3\metadata.xml" />
+    <Content Include="Content\Course3\scormcontent\assets\-6euR8v1XPWoKgTy_J8kImUaW5FQJqokl.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\-CCPBLGuPVhOXMPv_TNLjIAjQdP6DSoEn.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\-LV-YfSKHvlYn5E4_0GJBqRNlj9zTQJAN.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\-W41wC44e5Wt1irr_8btc20JgC1KyOSxh.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\077xgmOyVwF1PTPw_NSskZQvTkU7iMmUO.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\2lHxemFQEpv8XoXR_iLo8WOowt_JamWyR.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\2mUQMKrnmiCTZE73_mountains.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\2Nb3GimaOd0Wr6Sd_bJup5tiYObuVaMVH.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\3QLIMIV6NnTebjE__5GuZtrqQI-eaBK49.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\3StbWArAeftDmusw_small.png" />
+    <Content Include="Content\Course3\scormcontent\assets\4fWz41ypa1g0TnVS_u6IXzvbPynAQhcW4.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\5RhZVWDGRiSdzYe8_JvN1H2C6po4gEBbZ.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\6H2668235txzVtUU_rAfDZsh6D_XKygzl.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\6nUhQvauz2ece9Mg_3sFyvOYq5XzG_ztw.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\6Xg1Ow4ToPEKK3_s_Jt_JVgCyMVGTddl-.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\7jEk0mL8Lv8rwv1n_qSO0MCtEsDiyWOCU.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\7sHnhPaMRCbxyJyh_YUdfMN0aSaMRx1rF.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\81SQ48IGUh77vsr4_G4Ki0SPTNH28JhLD.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\a-9LqXxf2dMp5NS3_ozCdtRfPbeEspABd.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\a1vZwVfHt1Nichu7_NeCpIjwVBdRnmG5R.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\a4zgpRZyAJbIZ-e6_W51fUg6RTCul-yI_.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\aj-75Rs7J56owBGH_9inPCyIn2a5QW_wE.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\AVL3ktSH-O4o_V53_mU8eTHj7yaFGuT2N.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\b7kcfgW5ycaN45Ci_srBo38tUk6V3jlNe.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\b8EqbdbyrPopDdf0_F3mOIENkSxHJhW7r.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\BA-oad76g2jRdzKJ_rWTR7vH96sA-oopz.png" />
+    <Content Include="Content\Course3\scormcontent\assets\BxNzY_2n_rWiuwax_1QZPrJL3YCkIrCZp.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\CBgYnPtNK-Eknapy_09Kws8SBGAw-2B88.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\cBn-23GqEdxDBD0Y_xxMrEwjlyo0GKCIx.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\CK3EpUIBXr0iM2dY_pbqYrdHf7dhXwH4w.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\cxsflMifRsjal1uU__atpzTSN7L1QknkE.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\D2RLxT92E2kPooqH_zwRlIxHLNHpYx7jd.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\DNpOdBf2dDEkqFST_ckyXkfOn9AtdIJ1Q.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\drC2yN50299QapId_sM0uTQZG5XTEihmr.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\dzDkdJ1winfNekhr_JhVVl3HFKinj1dRv.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\EHZ-6bmX9g37cvAr_RP6aX9LECN2z1nid.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\FlzXjh7ksDx2sXtR_coastline_poster.png" />
+    <Content Include="Content\Course3\scormcontent\assets\fPipJeskBU2U8duj_CiM9UOSG-2KS0QTi.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\fwrbbcJuBtE8RuiM_rhTWdk2TKnfiHXur.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\g-4hLBJm2SgmrcO0_aMjFYm9-wrCDi0ZW.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\g7qacPpIDUFnpdIe_nYiiV_OG9CwN2AaT.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\GBF0TyzuZ7DWHrVW_ANO5tNg5q_BV_ALa.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\gc6OIrdC5NK5cv04_IVTwWrCzsSYm_bWS.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\GfPBs9aT8INGgZKQ_9gE3I8pyS9xzZVoa.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\GFQxh_JuYLKe-p5F_IttZM1jHn2RNQ8iw.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\iJcYJ0uegX8c4mkr_fhq1l9CKl_FSRR2y.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\jh9OojldgdaGw1ju_rPWdDog5vZQsHu2b.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\jiUZcT8YWzKU5tCm_rKCSdCbUwO0hK56S.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\JS9hplG1bb8kSWhb_HvMzYT-uwgO7-KTY.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\kmGTxraFWprmOBEh_S4V87Am-MBcEWMzZ.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\L5h125XFpagvGB_w_bbhzXJEqFLmSZogD.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\MA33SI_NPlTu7ibo_bNZdCy2-EjWH-z4V.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\mgOOkpil_ngJRC5m_silkWm-Ppqv18Fvg.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\MhdXMViHisLPJYPw_9jWee3Q35PwU0A9N.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\MpZdcO4Y3yxfQKtb_ZvMlERStAz2zAWUA.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\m_5j4Fh_ea5MUzrk_CMt6dZ3zkUVN9weM.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\N9VBHWYgG1eb5PXD_8luO98i9WxZ1za1X.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\NCu3LOrb_s7n0i3-_uIDRYRilWdRdqlm_.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\NOmPwzMptJKCAgkr_GJ0wd9RRnmVXp0Z9.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\o3j8exk3lNli5sSQ_xgKWw6Cl77hb6kB8.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\oMj3La7xSJSD2dcZ_kjvyVUwilsDfLjOP.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\owwo_A51KymrMbLi_t8bQ8wwGrv87Lfee.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\QJnyE0bjhodWh0w8_njGwfH_LRqoZuv-c.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\QjUwVReiUtQbMcge_tBi01mQOdbJVlCgT.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\qnL82yFeCd9fCBjZ_2vMHHE6qh_GrxGyP.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\rIJNW0G79aYupZ0g_wpmv8ir3VyTI_vF1.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\rjja8FRIdo9s23lb_QChknizJZi01RasX.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\SHvDo60fro19KZkF_b0wLzahAgOK1zxaO.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\s_8ichEkcFSJ9sEJ_6gyavZgrlRguR0_7.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\Tkd1XvUx4JgG257S_HkdNbhdJQ1TTBrEP.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\TtAv7g4ObIXjchgT_49ttZLVdr1YelqOJ.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\tx8LFuwwPZSnfjYN_n3h7scNo_c0sjHbe.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\U4TgxSRdk5V-bAiH_Wo6pRsU97VnV60YN.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\UhXfvqPnbmu1ASoA_CCm9Hc-ebIuhohbQ.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\uOiftgAEpi8JQ2nD_w0Y6IrEF54dEyQ5T.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\UTjKl3uzxtJj8r4p_AOL5zk5BDXqwVxyf.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\UY6y5QuDZo8nClw7_mchX-rQ8sr6Cr1Dr.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\vYvu4FlcWNl6SAe-_tSICxNvE_2XlHrA6.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\W4Ho-aua2moRk5O0_quote_background.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\WaCyEzJka0SAli8__dL__F3B2khPpCzeX.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\wdt3LEWiKzCqKbBO_sjkDonV1-O_1If0v.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\WETGcmPnOIJf_wLp_lb48Jvwn12luWWPz.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\x72iaVsQegnR_9ZP_mFtfNUorwNYhrD18.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\XcnlXC0GVTI0mcNG_sDPgnCIbasaV7HYO.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\xpnPU8BbJET28Ysn_DlF6XS8ClJkE7-0f.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\xtE4HIzeW8WYhkwD_jX_SvKiRUGETBJBI.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\xWtroa6fB9HsXbGV_vtARGDYMexGMJHzA.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\YE0wL0hi4XX1AAI3_coastline.mp4" />
+    <Content Include="Content\Course3\scormcontent\assets\ypdGTfaUgjKoA8N__SA9QLsGDWC1G5QAB.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\ZGXG7x_MEW9DbL77_r9Ghr9qkE39dUWed.jpg" />
+    <Content Include="Content\Course3\scormcontent\assets\_BvaoQ1p35FdfaPU_EJCc1x3X3mE8I0ds.jpg" />
+    <Content Include="Content\Course3\scormcontent\index.html" />
+    <Content Include="Content\Course3\scormcontent\lib\icomoon.css" />
+    <Content Include="Content\Course3\scormcontent\lib\lzwcompress.js" />
+    <Content Include="Content\Course3\scormcontent\lib\main.bundle.css" />
+    <Content Include="Content\Course3\scormcontent\lib\main.bundle.js" />
+    <Content Include="Content\Course3\scormcontent\lib\player-0.0.11.min.js" />
+    <Content Include="Content\Course3\scormdriver\AICCComm.html" />
+    <Content Include="Content\Course3\scormdriver\auto-scripts\AutoBookmark.js" />
+    <Content Include="Content\Course3\scormdriver\auto-scripts\AutoCompleteSCO.js" />
+    <Content Include="Content\Course3\scormdriver\auto-scripts\CourseExit.js" />
+    <Content Include="Content\Course3\scormdriver\blank.html" />
+    <Content Include="Content\Course3\scormdriver\browsersniff.js" />
+    <Content Include="Content\Course3\scormdriver\driverOptions.js" />
+    <Content Include="Content\Course3\scormdriver\goodbye.html" />
+    <Content Include="Content\Course3\scormdriver\indexAPI.html" />
+    <Content Include="Content\Course3\scormdriver\preloadIntegrity.js" />
+    <Content Include="Content\Course3\scormdriver\scormdriver.js" />
+    <Content Include="Content\Course4\imsmanifest.xml" />
+    <Content Include="Content\Course4\metadata.xml" />
+    <Content Include="Content\Course4\scormcontent\assets\-xx8r-0lh4PnX8Ne_mountains.jpg" />
+    <Content Include="Content\Course4\scormcontent\assets\b7k6olG1q6avZVzT_small.png" />
+    <Content Include="Content\Course4\scormcontent\assets\eyfCn30AiPq1ol5k_map-balloon.jpg" />
+    <Content Include="Content\Course4\scormcontent\assets\LY_FPjxk-EChccsm_coastline.mp4" />
+    <Content Include="Content\Course4\scormcontent\assets\Mxu-7n3g3zNB2ndj_coastline_poster.png" />
+    <Content Include="Content\Course4\scormcontent\assets\Qzk_1rSi7y8S-PzX_bike.jpg" />
+    <Content Include="Content\Course4\scormcontent\index.html" />
+    <Content Include="Content\Course4\scormcontent\lib\icomoon.css" />
+    <Content Include="Content\Course4\scormcontent\lib\lzwcompress.js" />
+    <Content Include="Content\Course4\scormcontent\lib\main.bundle.css" />
+    <Content Include="Content\Course4\scormcontent\lib\main.bundle.js" />
+    <Content Include="Content\Course4\scormcontent\lib\player-0.0.11.min.js" />
+    <Content Include="Content\Course4\scormdriver\AICCComm.html" />
+    <Content Include="Content\Course4\scormdriver\auto-scripts\AutoBookmark.js" />
+    <Content Include="Content\Course4\scormdriver\auto-scripts\AutoCompleteSCO.js" />
+    <Content Include="Content\Course4\scormdriver\auto-scripts\CourseExit.js" />
+    <Content Include="Content\Course4\scormdriver\blank.html" />
+    <Content Include="Content\Course4\scormdriver\browsersniff.js" />
+    <Content Include="Content\Course4\scormdriver\driverOptions.js" />
+    <Content Include="Content\Course4\scormdriver\goodbye.html" />
+    <Content Include="Content\Course4\scormdriver\indexAPI.html" />
+    <Content Include="Content\Course4\scormdriver\preloadIntegrity.js" />
+    <Content Include="Content\Course4\scormdriver\scormdriver.js" />
+    <Content Include="Content\Course5\assets\17nSrNt3L-9k4KZu_OQvLXvLHXR76N6bw.jpg" />
+    <Content Include="Content\Course5\assets\42i3dcgOwwuwfFM4_FI76S-xfDRz_A8a0.jpg" />
+    <Content Include="Content\Course5\assets\4sx8ddIMge0rmDnB_9l4FvSlHubVFuJTF.jpg" />
+    <Content Include="Content\Course5\assets\7UqqGYKP2z8ff26___j7PMYFKn0sad4Zh.jpg" />
+    <Content Include="Content\Course5\assets\Aw8DGM3G4FIbmq5D_9yAnigfWEw3w2t6V.jpg" />
+    <Content Include="Content\Course5\assets\ckDhlSirKwYzjN79_BUFzUyY36oIHlS79.jpg" />
+    <Content Include="Content\Course5\assets\EOV_Upmqve1ffz5C_cCfVDhcksQNhrTKY.jpg" />
+    <Content Include="Content\Course5\assets\EWO3lBk1RIkSrGJl_5pdGZ-Ky4N7WgTG7.jpg" />
+    <Content Include="Content\Course5\assets\FEzpVK5PN3YKfpli_slprUFblzlXMspjw.jpg" />
+    <Content Include="Content\Course5\assets\gPwQK1lz1cfy2ziv_e7mSiMvB6CaRlqmb.jpg" />
+    <Content Include="Content\Course5\assets\kGOAl9Vq4WarLuw9_xZZhYBPktfMaOgii.jpg" />
+    <Content Include="Content\Course5\assets\MvTyl1feCf5pPC0O_XryZK6uUW6FBBYLe.jpg" />
+    <Content Include="Content\Course5\assets\n017qL5DP9Ez4Hu__stnwhZUof04Mwxf2.jpg" />
+    <Content Include="Content\Course5\assets\N1eU8X_13LM8gHKy_4OyLH4R8GRqxSKj5.jpg" />
+    <Content Include="Content\Course5\assets\ri9Gq6_g0R23mfGV_fFcVt86EvH9ZBtA_.jpg" />
+    <Content Include="Content\Course5\assets\rL9M5n7MqKK8Xxvt_6JqS20be1rEAEJaX.jpg" />
+    <Content Include="Content\Course5\assets\UN2HAjapvX0wpn7m_b2r9pC68R_WPyjtd.jpg" />
+    <Content Include="Content\Course5\assets\VdEbQgRfek2rEnDq_uLDUFoDSlj78YkEA.jpg" />
+    <Content Include="Content\Course5\assets\Xp5tGDI--cuF5RkF_small_1578249366.png" />
+    <Content Include="Content\Course5\assets\Y-MxA5gRJUF9bLo1_pSWkoQuP4G3wNCH7.jpg" />
+    <Content Include="Content\Course5\assets\_aBvr7qu0-DfniXu_wSn6vrY0dR8EgqXE.jpg" />
+    <Content Include="Content\Course5\goodbye.html" />
+    <Content Include="Content\Course5\index.html" />
+    <Content Include="Content\Course5\lib\icomoon.css" />
+    <Content Include="Content\Course5\lib\lzwcompress.js" />
+    <Content Include="Content\Course5\lib\main.bundle.css" />
+    <Content Include="Content\Course5\lib\main.bundle.js" />
+    <Content Include="Content\Course5\lib\player-0.0.11.min.js" />
+    <Content Include="Content\Course6\assets\01Bx0dbXmkq-b05O_9nsSeRhHYtZEd405.jpg" />
+    <Content Include="Content\Course6\assets\12a2PBDe0yWAGQnD_0_7AEFSQIL_mGBvx.jpg" />
+    <Content Include="Content\Course6\assets\1fwvKWv2w8xRkeg__rkCV-HlD0_9Ou-Bq.jpg" />
+    <Content Include="Content\Course6\assets\3hKeyViaaozX11w-_M_a8N8cpt817bfvU.jpg" />
+    <Content Include="Content\Course6\assets\3mjpgsEKHbQHs1Vo_ZMaZeVUp1UVMz-bn.jpg" />
+    <Content Include="Content\Course6\assets\3rBGkZxnKpiaVh7P_OsfeVq2m05KgCVU5.jpg" />
+    <Content Include="Content\Course6\assets\4ZcRJc9mn3DvP8Zi_zCQYIPgi5KeG6R_y.jpg" />
+    <Content Include="Content\Course6\assets\8t85bi-S63KkjdlM_jURqa_OccESAjr81.jpg" />
+    <Content Include="Content\Course6\assets\aCGrHwa1XfezPU4w_ntseLGNwLVmiy17r.jpg" />
+    <Content Include="Content\Course6\assets\AJ0T_pUUrlkbJOro_YGUXV_vqUO6OSzi6.jpg" />
+    <Content Include="Content\Course6\assets\aSFLrM80Rmn8ccJX_sl3Xm_VsUTfPjtNt.jpg" />
+    <Content Include="Content\Course6\assets\aVb_TNOxo_mEXOVK_PG4jymE-XFEzSKP5.jpg" />
+    <Content Include="Content\Course6\assets\bG3vxuOIpDSXTmWm_o6McpqJyAgbAliYP.jpg" />
+    <Content Include="Content\Course6\assets\Bv3axN5OlfKoT5R8_fshmk8HASBHUxTTE.jpg" />
+    <Content Include="Content\Course6\assets\ceBHKv8atUQVLE9e_6TbRrxI_B_7A0kiO.jpg" />
+    <Content Include="Content\Course6\assets\Dr6xkaAmR4_IjjdM_rlJswTU7-pOtoBTL.jpg" />
+    <Content Include="Content\Course6\assets\e43dCeZtmYXddpFE_ogH9FxOzbJfYsDCH.png" />
+    <Content Include="Content\Course6\assets\Fh1YD3YfMovCCe-v_dN3xCkChZLnkWVuA.jpg" />
+    <Content Include="Content\Course6\assets\fkOO8G-6yKNcHamR_aXfrpAQ3tBQqFzE3.jpg" />
+    <Content Include="Content\Course6\assets\fpBcP1ZD4snR8kds_kyU6exoixvY815J4.png" />
+    <Content Include="Content\Course6\assets\GP8S-rMqdfuzz-y9_b29hU4TorIJl5jDt.jpg" />
+    <Content Include="Content\Course6\assets\hczZnCqDJdt27Gh1_OY3xIXf13oKA_VTB.jpg" />
+    <Content Include="Content\Course6\assets\Is34HPi51WAuIYSm_dYVnszRw-tYmaddV.jpg" />
+    <Content Include="Content\Course6\assets\J413T1v7HCrQnsPX_o1nHv3jAraeCaVIA.jpg" />
+    <Content Include="Content\Course6\assets\jNacbedtzD4vhw3r_NvSouaQfwQ9XVpua.jpg" />
+    <Content Include="Content\Course6\assets\jsv9ayU7Dg5pqxRb_pK2mhaIr5BDVWgxS.jpg" />
+    <Content Include="Content\Course6\assets\K4Qe20ZercXuIT1a_qN7az7Rq5_pYHEeg.jpg" />
+    <Content Include="Content\Course6\assets\kbC3OBeJ9TD_Z_C-_T2q9x3RDCDUR_mXg.jpg" />
+    <Content Include="Content\Course6\assets\KK6a0NAo5AGoJWof_-F2HsHD4GdSqVdZ0.jpg" />
+    <Content Include="Content\Course6\assets\KMwcI_JBanGTv0ex_OGtEgXmcX8hlXyhl.jpg" />
+    <Content Include="Content\Course6\assets\Lgrh2QJp-H7RA7dA_3yhcQMI_0AGDqXtJ.jpg" />
+    <Content Include="Content\Course6\assets\lhbSNKVK2KZoUsdV_agaliDFQ7VUEBJsu.jpg" />
+    <Content Include="Content\Course6\assets\mOyXaZzAAJN8X7Qm_C0auQJPYHTT6G0aL.jpg" />
+    <Content Include="Content\Course6\assets\NLJ5soQUMvUP115b_AbWx9oiO78CzHli_.jpg" />
+    <Content Include="Content\Course6\assets\P00ftGGYKO1iw5iZ_5xGqW0pENPOtLyDy.jpg" />
+    <Content Include="Content\Course6\assets\PW94TQOLypEiRY9q_Sb12akxy1VxVbLlx.jpg" />
+    <Content Include="Content\Course6\assets\Qv30jGR1WYyZwFkN_IRpceC3tk0bLnWLZ.jpg" />
+    <Content Include="Content\Course6\assets\RH2B2n_X4975iG0k_0DGoSJBaerXSyE6C.jpg" />
+    <Content Include="Content\Course6\assets\rzkTle8ODpg9Zmp1_kiM4LKJDXNJdE6Zq.jpg" />
+    <Content Include="Content\Course6\assets\TkqytzIhN4tWvv1k_OPEUjp-35XVl5o5p.jpg" />
+    <Content Include="Content\Course6\assets\V6HoH83-iJGACgiW__BlLBkf0KCgkqO-v.jpg" />
+    <Content Include="Content\Course6\assets\vISRbBj-Y_kSLDbA_wv2vziojHB1DpYi5.jpg" />
+    <Content Include="Content\Course6\assets\VoeQH1HuHLn1mQ7n_GsqkjYr9aEV_rNCk.jpg" />
+    <Content Include="Content\Course6\assets\WiAUR5kRkB8pbobC_BI67qy01eBhXG72X.jpg" />
+    <Content Include="Content\Course6\assets\xy3ZQCNE4BB8tOLW_small_1578249366.png" />
+    <Content Include="Content\Course6\assets\y11jQnE5RdCvSHud__4OhrPFLYmpVzZgi.jpg" />
+    <Content Include="Content\Course6\assets\ygr5UWV5lWhAJGwL_Qx3Ax11OUGLE069K.jpg" />
+    <Content Include="Content\Course6\assets\YHdZPHyDjkSh4oAx_Reik7t2ycwByfYt1.jpg" />
+    <Content Include="Content\Course6\assets\ytgdamLR7knXltaj_zkTh7M1La9RHrIW2.jpg" />
+    <Content Include="Content\Course6\assets\_2ZxFKWo3eQ-2gE5_QanO7CZgHfTTsCFT.jpg" />
+    <Content Include="Content\Course6\goodbye.html" />
+    <Content Include="Content\Course6\index.html" />
+    <Content Include="Content\Course6\lib\icomoon.css" />
+    <Content Include="Content\Course6\lib\lzwcompress.js" />
+    <Content Include="Content\Course6\lib\main.bundle.css" />
+    <Content Include="Content\Course6\lib\main.bundle.js" />
+    <Content Include="Content\Course6\lib\player-0.0.11.min.js" />
+    <Content Include="Content\Course7\assets\ahbfvXkYEvmaCEQe_kyU6exoixvY815J4.png" />
+    <Content Include="Content\Course7\assets\aqSPk6dEWTiiXvKO_vGpRqJoKvQmxFa_J.jpg" />
+    <Content Include="Content\Course7\assets\bnIYPogR9SwFApVY_AEz8fyDP9Uj8kYpF.jpg" />
+    <Content Include="Content\Course7\assets\bZKXfBLcKb6NBtBE_In13Zpuw_FfktIxW.jpg" />
+    <Content Include="Content\Course7\assets\c2BIMjjzNbOj6N-U_N0D2Qq_9mM24Nwfu.jpg" />
+    <Content Include="Content\Course7\assets\cMeMTK33curn7FHZ_ZIdy8WTVlJvGFGdT.jpg" />
+    <Content Include="Content\Course7\assets\IdGJzRwV75Lm9lbL_qCiz_yTaeJ0mV94f.jpg" />
+    <Content Include="Content\Course7\assets\jVexuZHjA4_ooRT7_AhqDZlFvoVWVQZt_.png" />
+    <Content Include="Content\Course7\assets\kgnV3MnPmD8H4X0F_mf2u_43Vq-LIYIjP.jpg" />
+    <Content Include="Content\Course7\assets\nmay6iHq0pXCAjtA_c2YdN1k5yeC6YDov.jpg" />
+    <Content Include="Content\Course7\assets\PUs9vVMgTgK6KQv5_3dsy6X80-5eGqpLn.jpg" />
+    <Content Include="Content\Course7\assets\TvqDTnUtcpSoPVbi_DXXe4LBz7lzCObdP.png" />
+    <Content Include="Content\Course7\assets\vOajPVw4ercXTaXh_eBvFtwdsEV5c_xn4.jpg" />
+    <Content Include="Content\Course7\assets\vzsXIZvGg5_Se8yB_jpc-4MT38j7IulkK.jpg" />
+    <Content Include="Content\Course7\assets\Y7zfA-xAzJQwkbAu_small_1578249366.png" />
+    <Content Include="Content\Course7\goodbye.html" />
+    <Content Include="Content\Course7\index.html" />
+    <Content Include="Content\Course7\lib\icomoon.css" />
+    <Content Include="Content\Course7\lib\lzwcompress.js" />
+    <Content Include="Content\Course7\lib\main.bundle.css" />
+    <Content Include="Content\Course7\lib\main.bundle.js" />
+    <Content Include="Content\Course7\lib\player-0.0.11.min.js" />
+    <Content Include="Content\Course8\assets\5TCYZLCAeBjW9jVG_A7A43GjRAkoDkZxw.jpg" />
+    <Content Include="Content\Course8\assets\BaPWLJ_7SKnTPGgQ_small_1578249366.png" />
+    <Content Include="Content\Course8\assets\cKLXxka-ap0KTM6f_zAtgQnZ3UV6Qqsnb.jpg" />
+    <Content Include="Content\Course8\assets\EwyHspVU6CPHQEq7_KlCRLsq4GC-Km5WZ.jpg" />
+    <Content Include="Content\Course8\assets\Ihn2vO210pQCMFtA_Gnw3HQsSBhMHwAYC.png" />
+    <Content Include="Content\Course8\assets\ITW8ygFYM1YN5Whv_NvSouaQfwQ9XVpua.jpg" />
+    <Content Include="Content\Course8\assets\I_JhEHQaLCnBDqK5_09i_llc-Yo8LpGVl.jpg" />
+    <Content Include="Content\Course8\assets\Pr3PQi7DVleOULDN_ytV8O1vVict13JFp.jpg" />
+    <Content Include="Content\Course8\assets\rqn1CAYyyKrsLJ3X_v7fm_36Pzwkz3d_S.jpg" />
+    <Content Include="Content\Course8\assets\uAIGvgsgjLgtV9Ki_llA1xa1vMRSDJSJ5.jpg" />
+    <Content Include="Content\Course8\assets\yEEiHB4SBDSWka3Q_ogH9FxOzbJfYsDCH.png" />
+    <Content Include="Content\Course8\assets\ylnKLCYh_uyYjhx-_BTnXqsoj4_BkFl5q.jpg" />
+    <Content Include="Content\Course8\assets\yNIbPORR61k7E8K2_kyU6exoixvY815J4.png" />
+    <Content Include="Content\Course8\goodbye.html" />
+    <Content Include="Content\Course8\index.html" />
+    <Content Include="Content\Course8\lib\icomoon.css" />
+    <Content Include="Content\Course8\lib\lzwcompress.js" />
+    <Content Include="Content\Course8\lib\main.bundle.css" />
+    <Content Include="Content\Course8\lib\main.bundle.js" />
+    <Content Include="Content\Course8\lib\player-0.0.11.min.js" />
+    <Content Include="Content\Course9\assets\-yMfA6ZKISsB9QF8_TXQL4ai4jhRGYRgo.jpg" />
+    <Content Include="Content\Course9\assets\1Lbax76caBYj_c9i_OK6AHCYaOJ2jlOkM.jpg" />
+    <Content Include="Content\Course9\assets\2FuFThKH94J5hTA1_Dnn15JM8_37k2nzY.jpg" />
+    <Content Include="Content\Course9\assets\2UTF5N0TqilYhveX_QhlCtaXqDmkk1NyV.jpg" />
+    <Content Include="Content\Course9\assets\4fFGiNBrKphALp-W_o2hh4mOyTK6ncdY1.jpg" />
+    <Content Include="Content\Course9\assets\cPVZXEZe9tTAW_Yl_MIQEOShI9qBRPmyN.jpg" />
+    <Content Include="Content\Course9\assets\Eld__ickMY7sSGPa_WIPlwpe0rJraAKvW.jpg" />
+    <Content Include="Content\Course9\assets\fFmSOdwzNrmh44CT_eUfC7FObirY-3TLs.jpg" />
+    <Content Include="Content\Course9\assets\gF6kYSOncWeMLiL9_kkiftrmhpqQp87sA.png" />
+    <Content Include="Content\Course9\assets\GIVCi5_3KLUDJy8__DE_N7DNWrQlMHXgr.jpg" />
+    <Content Include="Content\Course9\assets\kF2Ii2KETeV1M68U_S5QGSbeenZYdn4dn.jpg" />
+    <Content Include="Content\Course9\assets\lNU8YilaRi7GwvAT_jhcDnhivqvw_Jfmp.jpg" />
+    <Content Include="Content\Course9\assets\MifyFg0YDbPDZOF5_6IJ90oPZ8FinFniS.jpg" />
+    <Content Include="Content\Course9\assets\MPU3oDIowW3DptlU_RCyDqeMXV-UwVq2N.jpg" />
+    <Content Include="Content\Course9\assets\o6oZms1H31jJMWFK_4GsYKBPS21jLUFma.jpg" />
+    <Content Include="Content\Course9\assets\SUE6ZO2G5YhwZjqG__eMBgRJSukSn9byT.jpg" />
+    <Content Include="Content\Course9\assets\SzCWiJUQiLZnGReo_s5On7z-X_yf_p6ht.jpg" />
+    <Content Include="Content\Course9\assets\YCOwgNf6VcJo0uPu_LWehwPTIM5cTaryc.jpg" />
+    <Content Include="Content\Course9\assets\ZV4_jRmlyImGuL6P_small_1578249366.png" />
+    <Content Include="Content\Course9\goodbye.html" />
+    <Content Include="Content\Course9\index.html" />
+    <Content Include="Content\Course9\lib\icomoon.css" />
+    <Content Include="Content\Course9\lib\lzwcompress.js" />
+    <Content Include="Content\Course9\lib\main.bundle.css" />
+    <Content Include="Content\Course9\lib\main.bundle.js" />
+    <Content Include="Content\Course9\lib\player-0.0.11.min.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Models\Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Course10\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course10\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course10\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course10\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course10\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course10\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course10\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course10\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course10\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course10\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course10\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course10\lib\fonts\Merriweather-Regular.woff" />
+    <Content Include="Content\Course10\lib\fonts\Raleway-Black.woff" />
+    <Content Include="Content\Course10\lib\fonts\Raleway-Bold.woff" />
+    <Content Include="Content\Course10\lib\fonts\Raleway-Italic.woff" />
+    <Content Include="Content\Course10\lib\fonts\Raleway-Light.woff" />
+    <Content Include="Content\Course10\lib\fonts\Raleway-Regular.woff" />
+    <None Include="Content\Course1\adlcp_rootv1p2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course1\imscp_rootv1p1p2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course1\imsmd_rootv1p2p1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course1\ims_xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Content\Course1\scormcontent\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course1\scormcontent\lib\fonts\Merriweather-Regular.woff" />
+    <None Include="Content\Course1\ScormEnginePackageProperties.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course2\adlcp_rootv1p2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course2\imscp_rootv1p1p2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course2\imsmd_rootv1p2p1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course2\ims_xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Content\Course2\scormcontent\assets\JDavvvuuMuZRPb6Y_3R9mzynuxKeU0CBw-WH-381.pdf" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course2\scormcontent\lib\fonts\Merriweather-Regular.woff" />
+    <None Include="Content\Course2\ScormEnginePackageProperties.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course3\adlcp_rootv1p2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course3\imscp_rootv1p1p2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course3\imsmd_rootv1p2p1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course3\ims_xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Content\Course3\scormcontent\assets\yf13wh0CuAFjQPnN_C1NICyWn5iGjd6Ba-New_Hire_Orientation_Checklist_template.pdf" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course3\scormcontent\lib\fonts\Merriweather-Regular.woff" />
+    <None Include="Content\Course3\ScormEnginePackageProperties.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course4\adlcp_rootv1p2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course4\imscp_rootv1p1p2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course4\imsmd_rootv1p2p1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\Course4\ims_xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Content\Course4\scormcontent\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course4\scormcontent\lib\fonts\Merriweather-Regular.woff" />
+    <None Include="Content\Course4\ScormEnginePackageProperties.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Content\Course5\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course5\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course5\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course5\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course5\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course5\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course5\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course5\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course5\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course5\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course5\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course5\lib\fonts\Merriweather-Regular.woff" />
+    <Content Include="Content\Course6\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course6\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course6\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course6\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course6\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course6\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course6\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course6\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course6\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course6\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course6\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course6\lib\fonts\Merriweather-Regular.woff" />
+    <Content Include="Content\Course7\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course7\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course7\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course7\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course7\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course7\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course7\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course7\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course7\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course7\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course7\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course7\lib\fonts\Merriweather-Regular.woff" />
+    <Content Include="Content\Course8\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course8\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course8\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course8\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course8\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course8\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course8\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course8\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course8\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course8\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course8\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course8\lib\fonts\Merriweather-Regular.woff" />
+    <Content Include="Content\Course9\lib\fonts\icomoon.ttf" />
+    <Content Include="Content\Course9\lib\fonts\icomoon.woff" />
+    <Content Include="Content\Course9\lib\fonts\Lato-Black.woff" />
+    <Content Include="Content\Course9\lib\fonts\Lato-Bold.woff" />
+    <Content Include="Content\Course9\lib\fonts\Lato-Italic.woff" />
+    <Content Include="Content\Course9\lib\fonts\Lato-Light.woff" />
+    <Content Include="Content\Course9\lib\fonts\Lato-Regular.woff" />
+    <Content Include="Content\Course9\lib\fonts\Merriweather-Black.woff" />
+    <Content Include="Content\Course9\lib\fonts\Merriweather-Bold.woff" />
+    <Content Include="Content\Course9\lib\fonts\Merriweather-Italic.woff" />
+    <Content Include="Content\Course9\lib\fonts\Merriweather-Light.woff" />
+    <Content Include="Content\Course9\lib\fonts\Merriweather-Regular.woff" />
+    <EntityDeploy Include="Models\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\CourseResult.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52999</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44392/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

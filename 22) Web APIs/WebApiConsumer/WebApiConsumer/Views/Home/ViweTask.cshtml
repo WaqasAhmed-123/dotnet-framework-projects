@@ -1,0 +1,59 @@
+﻿@using WebApiConsumer.Helping_Classes
+@{
+    ViewBag.Title = "Viwe Task";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="clearfix">
+    <h3 class="text-center">
+        <u>My Tasks</u>
+    </h3>
+</div>
+<br />
+
+<div style="min-height:700px" class="m-10">
+
+    <div style="font-weight:bold; color:@ViewBag.Color ; margin-left:10px;" id="alertMsg">
+        @ViewBag.Message
+    </div>
+
+    <input type="hidden" id="way" value="@ViewBag.Way" />
+    <div class="datatable-scroll table-bordered p-10">
+        <table class="table no-footer table-responsive table-striped" id="userTable">
+            <thead class="bg-blue-300">
+                <tr>
+                    <th class="text-bold">
+                        Date
+                    </th>
+                    <th class="text-bold">
+                        Name
+                    </th>
+                    <th class="text-bold">
+                        Duration
+                    </th>
+                    <th class="text-bold text-center">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach(TaskDTO i in ViewBag.Tlist)
+                {
+                    <tr>
+                        <td>@Convert.ToDateTime(i.Date).ToString("MM/dd/yyyy")</td>
+                        <td>@i.Name</td>
+                        <td>@i.Duration</td>
+                        <td class="text-center">
+                            <a title="Edit"><i class="icon-pencil text-info-600"></i></a> &nbsp;
+                            <a title="Delete"><i class="glyphicon glyphicon-remove text-danger"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

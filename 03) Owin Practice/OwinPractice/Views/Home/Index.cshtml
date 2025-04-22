@@ -1,0 +1,30 @@
+﻿@{
+    //Get the current claims principal
+    var identity = (System.Security.Claims.ClaimsPrincipal)System.Threading.Thread.CurrentPrincipal;
+    var id = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Sid)
+    .Select(c => c.Value).SingleOrDefault();
+    OwinPractice.Models.User user = new OwinPractice.BL.UserBL().GetUserbyId(Convert.ToInt32(id));
+}
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <a href="@Url.Action("Logout","Auth")" style="background-color:silver;padding:5px;
+                 border:1px solid black; color:white; text-decoration:none;">Logout</a>
+    </div>
+    <br />
+    <div align="center">Welcome 
+        @user.Name
+    </div>
+</body>
+</html>

@@ -1,0 +1,201 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div style="position:absolute;">
+    @ViewBag.Message
+</div>
+<br />
+<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+    
+    <div class="datatable-scroll">
+        <table class="table no-footer" id="example">
+            <thead>
+                <tr role="row">
+                    
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending">
+                        Name 
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Job Title: activate to sort column ascending">
+                        Contact
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="DOB: activate to sort column ascending">
+                        Email
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">
+                        Role
+                    </th>
+                    <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            
+            
+        </table>
+    </div>
+    
+</div>
+
+<script>
+
+    //this function is used to select all rows while exporting data
+    function exportAllData(e, dt, button, config)
+    {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings)
+            {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                    $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                    $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                    $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+
+    
+    $('#example').DataTable({
+        
+        dom: "<'ui grid'" +
+            "<'row'" +
+            "<'four wide column'l>" +
+            "<'center aligned eight wide column'B>" +
+            "<'right aligned four wide column'f>" +
+            ">" +
+            "<'row dt-table'" +
+            "<'sixteen wide column'tr>" +
+            ">" +
+            "<'row'" +
+            "<'seven wide column'i>" +
+            "<'right aligned nine wide column'p>" +
+            ">" +
+            ">",
+        buttons: [
+            {
+                extend: 'copyHtml5', //this is for copy button
+                text: 'Copy Table', //set button label
+                action: exportAllData, //this function is used to select all rows while coping or exporting
+                exportOptions: {
+                    columns: [0, 1, 2, 3] //only copy column 0-3 not 4th column
+                },
+                title: null
+            },
+            {
+                extend: 'excelHtml5', //this is for Excel button
+                text: '<i class="icon-file-excel" style="color: green;"></i>', //set button label with icons
+                "titleAttr": 'Export to Excel', //Set title (popup details on mouse over) for button
+                action: exportAllData,
+                exportOptions: {
+                    columns: [0, 1, 2, 3] //only generate column 0-3 not 4th column
+                },
+                //header: false,
+                title: null
+            },
+            {
+                extend: 'csvHtml5', //this is for Csv button
+                text: 'CSV', //set button label 
+                "titleAttr": 'Export to CSV', //Set title (popup details on mouse over) for button
+                action: exportAllData,
+                exportOptions: {
+                    columns: [0, 1, 2, 3] //only generate column 0-3 not 4th column
+                },
+                title: null
+            },
+            {
+                extend: 'print', //this is for Csv button
+                text: 'Print', //set button label 
+                "titleAttr": 'print', //Set title (popup details on mouse over) for button
+                action: exportAllData,
+                exportOptions: {
+                    columns: [0, 1, 2, 3] //only generate column 0-3 not 4th column
+                },
+                title: ''
+            },
+            {
+                extend: 'pdfHtml5', //this is for pdf button
+                action: exportAllData,
+                exportOptions: {
+                    columns: [0, 1, 2, 3] //only generate column 0-3 not 4th column
+                },
+                orientation: 'landscape',
+                pageSize: 'A4',
+                customize: function (doc)
+                {
+                    doc.defaultStyle.fontSize = 8; 
+                    doc.styles.tableHeader.fontSize = 16;
+                },
+                title: null
+                
+            },
+            'colvis' //this is for column visibility button
+        ],
+        "ajax": {
+            "url": '@Url.Action("GetDisplayGroupUser", "Home")',
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columns": [
+            { "data": "Name", "name": "Name" },
+            { "data": "Contact", "name": "Contact" },
+            { "data": "Email", "name": "Email" },
+            { "data": "Role", "name": "Role" },
+            { "data": "Id", "name": "Id" }
+        ],
+        
+        'columnDefs': [
+            {
+                
+                render: function (data, type, full, meta) {
+                    return '<div class="text-center"><a class="btn btn-primary btn-sm" href="../Home/UpdateUser?UserId=' + full.Id + '"> Edit </a>' +
+                        ' <a style="margin-top:1em;" class="btn btn-danger btn-sm" href="../Home/DeleteUser?UserId=' + full.Id + '"> Delete </a></div>';
+                },
+                targets: 4
+            }
+        ],
+        
+        "serverSide": "true",
+        "processing": "true",
+        "language":
+        {
+            "processing": "<br><br><span style='color:green;'>Loading... Please wait</span></br></br>"
+        }
+
+
+
+    });
+
+    
+</script>

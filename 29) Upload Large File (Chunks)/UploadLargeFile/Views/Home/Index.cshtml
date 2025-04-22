@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <input type="file" name="PostedFile"  id="fileUpload"/>
+        <input type="button" id="btnUpload" value="Upload" />
+        
+        <progress id="fileProgress" style="display: none"></progress>
+        <hr />
+        <span id="lblMessage" style="color: Green"></span>
+    </form>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $("body").on("click", "#btnUpload", function ()
+        {
+            var fileUpload = $("#fileUpload").get(0);
+            var files = fileUpload.files;
+
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+
+                fileData.append(i, files[i]);
+            }
+
+            ajaxcall = $.ajax({
+                url: '../Home/ProcessRequest',
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                data: fileData,//new FormData($('form')[0]),
+                cache: false,
+                success: function (file)
+                {
+                    $("#fileProgress").hide();
+                    $("#lblMessage").html("<b>" + file + "</b> has been uploaded.");
+                },
+                error: function () {
+                    alert("error");
+                },
+                xhr: function ()
+                {
+                    var fileXhr = $.ajaxSettings.xhr();
+                    if (fileXhr.upload)
+                    {
+                        $("progress").show();
+                        fileXhr.upload.addEventListener("progress", function (e)
+                        {
+                            if (e.lengthComputable)
+                            {
+                                $("#fileProgress").attr({
+                                    value: e.loaded,
+                                    max: e.total
+                                });
+                            }
+                        }, false);
+                    }
+                    return fileXhr;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

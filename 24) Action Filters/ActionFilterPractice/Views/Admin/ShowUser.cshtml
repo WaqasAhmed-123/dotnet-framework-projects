@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewBag.Title = "Users List";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+ 
+<div class="content m-10 bg-white">
+
+    <div class="modal" id="updateUserModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">Update User</h4>
+                    <button type="button" class="close text-danger" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form action="@Url.Action("PostUpdateUser","Admin")" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input class="form-control" type="hidden" required name="Id" id="updId" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-bold">Name</label>
+                            <input type="text" name="Name" id="updName" class="form-control" placeholder="User Name" required>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="text-bold">Contact</label>
+                            <input type="text" name="Contact" id="updContact" class="form-control" placeholder="User Contact Number" required>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-bold">Email</label>
+                            <input type="email" name="Email" id="updEmail" class="form-control" placeholder="User Email" required onkeyup="validateEmail(this.value)">
+                            <span class="text-danger" id="errMsg" hidden>Email already exist, Try another</span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer text-center">
+                        <button type="submit" class="btn btn-primary" id="updSubBtn">Update</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <a href="@Url.Action("AddUser","Admin")" class="btn btn-primary pull-right">Add User</a>
+    <br />
+    <div class="clearfix">
+
+        <h3 class="text-center">
+            <u>User List</u>
+        </h3>
+
+
+    </div>
+    <br />
+    <div style="min-height:700px">
+        <div id="alertMsg" style="font-weight:bold; color:@ViewBag.Color ; margin-left:10px;">
+            @ViewBag.Message
+        </div>
+
+        <div class="datatable-scroll table-bordered p-10">
+
+            <table class="table no-footer table-responsive" id="userTable">
+
+                <thead class="bg-blue-800">
+                    <tr>
+
+                        <th class="text-bold">
+                            Name
+                        </th>
+                        <th class="text-bold">
+                            Contact
+                        </th>
+                        <th class="text-bold text-center">
+                            Email
+                        </th>
+                        <th class="text-bold text-center">
+                            Action
+                        </th>
+
+                    </tr>
+                </thead>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+
+    $('#userTable').DataTable(
+    {
+        "ajax":
+        {
+            "url": '@Url.Action("UserList", "Admin")',
+            "type": "POST",
+            "datatype": "json",
+        },
+        'columnDefs':
+        [
+            {
+                "targets": 0,
+                //'className': 'col-lg-2',
+
+                "render": function (data, type, full, meta)
+                {
+                    return full.Name;
+                }
+            },
+            {
+                "targets": 1,
+
+                "render": function (data, type, full, meta)
+                {
+                    return  full.Contact;
+                }
+            },
+            {
+                "targets": [2],
+                'className': 'text-center',
+                "render": function (data, type, full, meta)
+                {
+                    return full.Email;
+                }
+            },
+            {
+                "targets": [3],
+
+                "render": function (data, type, full, meta)
+                {
+                    return ' <ul class="icons-list text-center"> <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-menu9"></i> </a> <ul class="dropdown-menu dropdown-menu-right"> <li><a onclick="editUserFunction(' + full.Id + ')"><i class="icon-pencil"></i> Edit</a></li> <li><a class="text-danger" onclick="deleteFunction(' + full.Id + ')" data-toggle="modal" data-target="#deleteModal"><i class="glyphicon glyphicon-floppy-remove"></i> Delete</a></li> </ul></li></ul>';
+                }
+            },
+
+        ],
+        "serverSide": "true",
+        "processing": "true",
+        "language":
+        {
+            "processing": "<img src='../Content/assets/images/loading.gif' width='150'/>",
+            "search": "<span>Search :</span> _INPUT_",
+            "searchPlaceholder": "Type to filter...",
+            "lengthMenu": "<span>Show :</span> _MENU_",
+            "paginate": { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+        },
+
+
+    });
+
+
+    function editUserFunction(id) {
+        $.ajax({
+            type: 'POST',
+            url: "../Admin/GetUserById",
+            dataType: "json",
+            data: {
+                _Id: id
+            },
+            success: function (response)
+            {
+                $("#updId").val(response.Id);
+                $("#updName").val(response.Name);
+                $("#updContact").val(response.Contact).change();
+                $("#updEmail").val(response.Email).change();
+
+                $("#updateUserModal").modal('show');
+            },
+            error: function ()
+            {
+                alert("ajax Failed");
+            }
+        });
+    }
+
+    function validateEmail(email) {
+        var id = $('#updId').val();
+
+        $.ajax({
+            type: 'POST',
+            url: "../Admin/ValidateEmail",
+            dataType: "json",
+            data: {
+                Email: email, Id: id
+            },
+            success: function (response) {
+                if (response == false) {
+                    $('#errMsg').show();
+                    $('#updSubBtn').attr("disabled", true);
+                }
+                else {
+                    $('#errMsg').hide();
+                    $('#updSubBtn').attr("disabled", false);
+
+                }
+            },
+            error: function () {
+                alert("ajax Failed");
+            }
+        });
+    }
+
+
+    function deleteFunction(id) {
+        var a = document.getElementById('deleteId');
+        a.href = "../Admin/DeleteUser?_Id=" + id + "";
+    }
+
+</script>
+
+
+

@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "AddStudent";
+}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <script src="~/scripts/jquery.dataTables.min.js"></script>
+    <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
+
+
+
+    <script>
+
+        $(document).ready(function () {
+            $("#btnSave").click(function () {
+                $.ajax(
+                    {
+                        type: "POST", //HTTP POST Method
+                        url: "PostAddStudent/Default", // Controller/View
+                        data: { //Passing data
+                            StudentName: $("#txtName").val(), //Reading text box values using Jquery
+                            StudentAddress: $("#txtAddress").val(),
+                            success: function () {
+                                alert("Data has been added successfully.");
+
+                            }
+                        }
+
+                    });
+
+            });
+        });
+
+
+    </script>
+
+</head>
+
+
+
+
+
+<br />
+<br />
+<fieldset>
+    <div class="form-horizontal">
+        <div class="editor-label">
+            Name
+        </div>
+        <div class="editor-label">
+            <input type="text" id="txtName" />
+        </div>
+
+        <div class="editor-label">
+            Address
+        </div>
+        <div class="editor-label">
+            <input type="text" id="txtAddress" />
+        </div>
+
+
+        <div class="editor-label">
+            <br />
+            <input class="btn-default" type="button" id="btnSave" value="Save" />
+        </div>
+    </div>
+
+</fieldset>
+<br />
+<br />
+<br />
+<br />
+<div>
+    <a href="@Url.Action("GetStudent","Default")">View Record</a>
+</div>

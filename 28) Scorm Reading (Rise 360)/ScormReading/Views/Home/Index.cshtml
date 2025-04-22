@@ -1,0 +1,97 @@
+﻿@using ScormReading.BL
+@using ScormReading.Models
+@{
+    DatabaseEntities de = new DatabaseEntities();
+
+    var identity = (System.Security.Claims.ClaimsPrincipal)System.Threading.Thread.CurrentPrincipal;
+    var id = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Select(c => c.Value).SingleOrDefault();
+    User loggedinUser = new UserBL().GetUserById(Convert.ToInt32(id), de);
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Courses</title>
+    <style>
+        .btn {
+            border: 1px solid blue;
+            padding: 5px;
+            border-radius: 2px;
+            text-decoration: none;
+            color: white;
+            background-color: cornflowerblue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div>
+
+        <div>
+            <span class="btn" style="float:left; background-color:pink">@loggedinUser.Name</span>
+            <a href="@Url.Action("Logout","Auth")" class="btn" style="float:right">logout</a>
+        </div>
+
+        <br />
+        <center><h3><u>Available Courses</u></h3></center>
+        <ol>
+            <li>
+                <a href="~/Content/Course1/scormcontent/index.html" target="_blank">New Manager Training</a>
+            </li>
+
+            <li>
+                <a href="~/Content/Course2/scormcontent/index.html" target="_blank">Employee Guide to the Family and Medical Leave Act (FMLA)</a>
+            </li>
+
+            <li>
+                <a href="~/Content/Course3/scormcontent/index.html" target="_blank">New Employee Onboarding</a>
+            </li>
+
+            <li>
+                <a href="~/Content/Course4/scormcontent/index.html" target="_blank">Mango Course</a>
+            </li>
+
+            
+                <hr />
+
+            <li>
+                <a href="~/Content/Course5/index.html" target="_blank">California OSHA</a>
+            </li>
+
+            <li>
+                <a href="~/Content/Course6/index.html" target="_blank">OSHA General</a>
+            </li>
+
+            <li>
+                <a href="~/Content/Course7/index.html" target="_blank">Underground Mining</a>
+            </li>
+
+            <li>
+                <a href="~/Content/Course8/index.html" target="_blank">Healthcare</a>
+            </li>
+
+            <li>
+                <a href="~/Content/Course9/index.html" target="_blank">IATA</a>
+            </li>
+            
+            <hr />
+
+            <li>
+                <a href="~/Content/Course10/index.html" target="_blank">Todd Smith Fitness Trainer Certification</a>
+            </li>
+        </ol>
+
+        <br />
+        <hr />
+        <center>
+            <a href="@Url.Action("Courseresult","Home")" class="btn">View Result</a>
+        </center>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,242 @@
+﻿
+@{
+    ViewBag.Title = "Calender2";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <link href='~/Content/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
+    <link href='~/Content/fullcalendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+    <script src='~/Content/fullcalendar/lib/moment.min.js'></script>
+    <script src='~/Content/fullcalendar/lib/jquery.min.js'></script>
+    <script src='~/Content/fullcalendar/fullcalendar.min.js'></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+
+        $(document).ready(function ()
+        {
+            var events = [];
+
+            $.ajax({
+                type: 'Post',
+                url: "@Url.Action("GetTaskData", "Home")",
+                dataType: "json",
+                success: function (data)
+                {
+                    $.each(data, function (i, v)
+                    {
+                        events.push({
+
+                            id: v.Id,
+                            title: v.Title,
+                            description: v.Detail,
+                            start: moment(v.StartDate),
+                            end: v.EndDate != null ? moment(v.EndDate) : null, //if end date not equal to null then display else wise display null
+                            color: 'blue'
+                        })
+
+                    });
+
+                    GenerateCalender(events); //passing values to calender after fetching from ajax call
+                },
+                error: function (error)
+                {
+                    alert("Error");
+                }
+
+            });
+
+
+            function GenerateCalender(events)
+            {
+                $('#calendar').fullCalendar('destroy');
+
+                $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                defaultDate: new Date(), //'DateTime.Now'
+                navLinks: true, // can click day/week names to navigate views
+                selectable: true, //allow onclick listener
+                selectHelper: true,
+                select: function (start, end)
+                {
+
+                    $('#myModal').modal('show');
+
+                    $('#sdate').val(start);
+                    $('#edate').val(end);
+
+
+                    $('#calendar').fullCalendar('unselect');
+                },
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                views: 
+                {
+                    month: //applied on monthly view
+                    {
+                        eventLimit: 5 // it will show 4 tasks and then 5th will be in "+ more" option
+                    }
+                    //week: //applied on weekly view
+                    //{
+                    //    eventLimit: 5 
+                    //}
+                },
+                //eventColor: 'red',
+                events: events,
+                eventClick: function (events)
+                {
+
+                    $("#id2").text(events.id);
+                    $("#sdate2").text(events.start.format('Y-MM-DD HH:mm:ss'));
+                    $("#edate2").text(events.end.format('Y-MM-DD HH:mm:ss'));
+                    $("#title2").text(events.title);
+                    $("#detail2").text(events.description);
+
+                    $('#myModal2').modal('show');
+
+                },
+                eventRender: function (events, $el)
+                {
+                    $el.popover({
+                        //title: events.title,
+                        //content: 'task name: ' + events.title + ', start date: ' + events.start.format('y-mm-dd hh:mm:ss'),
+                        content: function ()
+                        {
+                            $("#popoverTitle").text(events.title);
+                            $("#popoverStart").text(events.start.format('Y-MM-DD HH:mm:ss'));
+                            $("#popoverEnd").text(events.end.format('Y-MM-DD HH:mm:ss'));
+
+                            return $("#popoverContent").html();
+                            //return 'title :' + events.title +', details: ' + events.description + ', from ' + events.start.format('y-mm-dd hh:mm:ss') + ' to ' + events.end.format('y-mm-dd hh:mm:ss');
+                        },
+                        placement: 'top',
+                        html: 'true',
+                        trigger: 'hover',
+                        animation: 'true',
+                        container: 'body'
+
+                    });
+                },
+                loading: function (bool)
+                {
+                    $('#loading').toggle(bool);
+                }
+            });
+            }
+
+
+
+
+
+        });
+
+    </script>
+    <style>
+
+        body {
+            margin: 40px 10px;
+            padding: 0;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            font-size: 14px;
+        }
+
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="popoverContent" class="hide">
+        <h4 id="popoverTitle" class="text-center"></h4>
+        Start: <span id="popoverStart"></span>
+        <br />
+
+        End: <span id="popoverEnd"></span>
+    </div>
+
+    <h3 align="center">on click task open modal for details</h3>
+
+
+    <a class="btn btn-info" href="@Url.Action("Index","Home")">Calender 1</a>
+    <br />
+    <br />
+
+    <div id='calendar'>
+    </div>
+
+
+
+    <!-- Add new Modal -->
+    <div id="myModal" class="modal" style="width:500px; margin-left:550px;">
+        <br />
+        <br />
+        <br />
+        <br />
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" data-dismiss="modal"><span style="color:red;">&times;</span></span>
+            <h5 align="center">Enter Task Details</h5>
+
+            <form>
+                Start Date: <input type="text" required name="sdate" id="sdate" />
+                <br />
+                End Date: <input type="text" required name="edate" id="edate" />
+                <br />
+                Title: <input type="text" required name="title" id="title" />
+                <br />
+                Task Details: <input type="text" required name="detail" id="detail" />
+                <br />
+                <br />
+
+                <input type="submit" value="save" />
+
+            </form>
+        </div>
+
+    </div>
+    <!-- Add new Modal -->
+    <!-- Deatail Modal -->
+    <div id="myModal2" class="modal" style="width:500px; margin-left:550px;">
+        <br />
+        <br />
+        <br />
+        <br />
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" data-dismiss="modal"><span style="color:red;">&times;</span></span>
+            <h5 align="center">Task Details</h5>
+
+            Id: <span id="id2"></span>
+            <br />
+            Start Date: <span id="sdate2"></span>
+            <br />
+            End Date: <span id="edate2"></span>
+            <br />
+            Title: <span id="title2"></span>
+            <br />
+            Task Details: <span id="detail2"></span>
+            <br />
+            <a href="" class="btn btn-primary">View</a>
+
+        </div>
+
+    </div>
+    <!-- Deatail Modal -->
+
+
+
+</body>
+</html>

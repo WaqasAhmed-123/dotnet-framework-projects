@@ -1,0 +1,285 @@
+﻿@using ChatBox.Models;
+@using ChatBox.BL;
+@{
+    //Get the current claims principal
+    var identity = (System.Security.Claims.ClaimsPrincipal)System.Threading.Thread.CurrentPrincipal;
+    var id = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Select(c => c.Value).SingleOrDefault();
+
+    User loggedInUser = new UserBL().GetUserById(Convert.ToInt32(id));
+}
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contacts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: #7F7FD5;
+            background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+            background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+        }
+
+        .chat {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .card {
+            height: 500px;
+            border-radius: 15px !important;
+            background-color: rgba(0,0,0,0.4) !important;
+        }
+
+        .msg_card_body {
+            overflow-y: auto;
+        }
+
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+            border-bottom: 0 !important;
+        }
+
+        .card-footer {
+            border-radius: 0 0 15px 15px !important;
+            border-top: 0 !important;
+        }
+
+        .user_img {
+            height: 70px;
+            width: 70px;
+            border: 1.5px solid #f5f6fa;
+            padding: 5px;
+            color: white;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .msg_cotainer {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 10px;
+            border-radius: 5px;
+            background-color: #82ccdd;
+            padding: 10px;
+            position: relative;
+            width:100%;
+        }
+
+        .msg_head {
+            position: relative;
+        }
+
+        #action_menu_btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center h-100">
+
+            <div class="col-md-8 col-xl-6 chat">
+                <div class="card">
+
+
+                    <div class="card-header msg_head">
+                        <div class="d-flex bd-highlight">
+                            <div class="" style="margin-top:15px;">
+                                <span class="rounded-circle user_img">@loggedInUser.Name</span>
+                            </div>
+                            <div class="text-center" style="width:520px;">
+                                <span style="font-weight:bold; color:white; font-size:1.2em">Contact List</span>
+
+                            </div>
+
+                        </div>
+                        <a href="@Url.Action("Logout", "Auth")" id="action_menu_btn"><i class="fa fa-power-off" title="Sign Out"></i></a>
+
+                    </div>
+
+
+
+                    <div class="card-body msg_card_body" id="cardbody">
+                        <span>Loading..,</span>
+                        @*<a href="@Url.Action("Chat", "Home", new { ReceiverId = 1 })" style="text-decoration:none; color:black; font-weight:bold;text-transform:capitalize;">
+                                <div class="d-flex justify-content-start mb-4">
+                                    <div class="msg_cotainer">
+
+                                        <span class="badge bg-danger">count</span>
+
+
+
+                                    </div>
+                                </div>
+                            </a>*@
+
+
+                    </div>
+
+
+
+
+                    <div class="card-footer text-center">
+                        <span>Simple SignalR Chatbox</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        window.onload = function ()
+        {
+            GetUserList();
+
+        };
+
+        function GetUserList()
+        {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: '@Url.Action("GetUserList", "Home")',
+                //data: { SenderId: sid, ReceiverId: rid },
+                success: function (response)
+                {
+                    $('#cardbody').empty(); //clearing previous tags inside div to append new data
+
+                    var i = 0;
+                    $.each(response, function ()
+                    {
+                        var sts;
+                        if (response[i].IsLoggedin == 1)
+                        {
+                            sts = '<span id="sts' + response[i].Id + '" style="background-color: pink; width: 10px; margin-left: 3px; border-radius: 100%; height: 10px;"></span>';
+                        }
+                        else
+                        {
+                            sts = '<span id="sts' + response[i].Id + '"></span>';
+                        }
+
+                        if (response[i].Count > 0)
+                        {
+                            $("#cardbody").append('<a href="Home/Chat?ReceiverId=' + response[i].Id + '" style="text-decoration:none; color:black; font-weight:bold;text-transform:capitalize;"><div class="d-flex justify-content-start mb-4"><div class="msg_cotainer"><span class="badge bg-danger" id="count' + response[i].Id + '">' + response[i].Count + '</span> ' + response[i].Name + '</div>' + sts + '</div></a>');
+                        }
+                        else
+                        {
+                            $("#cardbody").append('<a href="Home/Chat?ReceiverId=' + response[i].Id + '" style="text-decoration:none; color:black; font-weight:bold;text-transform:capitalize;"><div class="d-flex justify-content-start mb-4"><div class="msg_cotainer"><span class="badge bg-danger" id="count' + response[i].Id + '"></span> ' + response[i].Name + '</div>' + sts + '</div></a>');
+                        }
+
+                        i++;
+                    });
+
+                },
+                error: function (response)
+                {
+                    alert('Ajax List Error');
+                }
+
+            });
+
+        }
+
+    </script>
+
+
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+
+        $(function ()
+        {
+            var chat = $.connection.chatHub; //get connection with function named "ChatHub" in DataHub -> ChatHub.cs
+
+            $.connection.hub.start().done(function () { });
+
+
+            chat.client.broadcastChatCount = function (response, SenderId)
+            {
+                if (response == "1")
+                {
+                    
+                    $.ajax({
+                        dataType: "json",
+                        type: "POST",
+                        url: '@Url.Action("GetUnreadChatCount", "Home")',
+                        data: { SenderId: SenderId },
+                        success: function (data)
+                        {
+                            if (data.Count == 0)
+                            {
+                                $("#count" + data.Id + "").text("");
+                            }
+                            else
+                            {
+                                $("#count" + data.Id + "").text(data.Count);
+                            }
+                        },
+                        error: function (response)
+                        {
+                            alert('Ajax Count Error');
+                        }
+
+                    });
+
+                }
+                else
+                {
+                    alert("Somethings Wrong!!");
+                }
+
+            };
+
+
+            chat.client.broadcastCheckLogin = function (response, UserId)
+            {
+                if (response == "1")
+                {
+                    $("#sts" + UserId + "").css({ "background-color": "pink", "width": "10px", "margin-left": "3px", "border-radius": "100%", "height": "10px" });
+                }
+                else if (response == "2")
+                {
+                    $("#sts" + UserId + "").css({ "background-color": "", "width": "", "margin-left": "", "border-radius": "", "height": "" });
+                }
+                else
+                {
+                    alert("Somethings Wrong!!");
+                }
+
+            };
+
+        });
+
+    </script>
+
+
+</body>
+
+
+
+</html>
+

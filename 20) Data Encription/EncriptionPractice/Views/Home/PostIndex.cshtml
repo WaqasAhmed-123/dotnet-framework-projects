@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "PostIndex";
+}
+
+<br />
+<br />
+<center>
+    <b>Original Text : </b> @ViewBag.Text
+    <br />
+    <form action="@Url.Action("Decoder","Home")">
+        <b>Encoded Text : </b> <input type="text" required name="Name" value="@ViewBag.enText" readonly />
+
+        <br />
+
+        <input type="submit" value="Decode" />
+    </form>
+</center>
+

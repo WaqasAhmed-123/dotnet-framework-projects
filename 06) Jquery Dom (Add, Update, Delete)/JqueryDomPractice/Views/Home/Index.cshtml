@@ -1,0 +1,126 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DOM</title>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+</head>
+<body>
+
+
+    <table id="table" border="1" align="center">
+        <tr>
+            <th> No. </th>
+            <th> Name </th>
+            <th> Contact </th>
+            <th> Update </th>
+            <th> Delete </th>
+
+        </tr>
+
+    </table>
+    <br />
+    <br />
+    <div align="center">
+        Name: <input type="text" required name="in1" id="in1" />
+    </div>
+    <br />
+    <div align="center">
+        Contact: <input type="text" required name="in2" id="in2" />
+    </div>
+    <br />
+    <div align="center">
+        <input type="button" class="sub" onclick="add()" Value="Add" id="sub" />
+
+        <input type="button" onclick="editRow()" Value="Save" id="upd" style="display:none;" />
+    </div>
+
+
+
+    <script>
+
+        $(document).ready(function ()
+        {
+
+            $('body').on('click', 'input.deleteBtn', function () {
+                $(this).parents('tr').remove();
+                document.getElementById("in1").value = "";
+                document.getElementById("in2").value = "";
+            });
+
+            $('body').on('click', 'input.updateBtn', function () {
+                $("#upd").css("display", "inline");
+                $("#sub").css("display", "none");
+            });
+
+
+            var count = 1;
+            $('body').on('click', 'input.sub', function ()
+            {
+                if ($("#in1").val() != "" && $("#in2").val() != "") {
+                    $("#table").append("<tr> <td>" + count + "</td> <td>" + $("#in1").val() + " </td><td>" + $("#in2").val() + "</td><td> <input type='button' class='updateBtn' value='Update' onclick='upd()' /> </td><td> <input type='button' class='deleteBtn' value='Delete' onclick = 'deleteRow()' /> </td>");
+                    count++;
+
+                    document.getElementById("in1").value = "";
+                    document.getElementById("in2").value = "";
+                }
+                else {
+                    alert("Empty Fields not Allowed");
+                }
+
+            });
+
+        });
+
+
+
+        var table = document.getElementById("table"), rIndex;
+
+        function upd() {
+
+            for (var i = 1; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    rIndex = this.rowIndex;
+                    console.log(rIndex);
+
+                    document.getElementById("in1").value = this.cells[1].innerHTML;
+                    document.getElementById("in2").value = this.cells[2].innerHTML;
+                    
+                };
+            }
+        }
+
+
+        // edit the row
+        function editRow() {
+            table.rows[rIndex].cells[1].innerHTML = document.getElementById("in1").value;
+            table.rows[rIndex].cells[2].innerHTML = document.getElementById("in2").value;
+
+
+            $("#upd").css("display", "none");
+            $("#sub").css("display", "inline");
+
+
+            document.getElementById("in1").value = "";
+                    document.getElementById("in2").value = "";
+
+        }
+
+
+    </script>
+
+
+</body>
+</html>

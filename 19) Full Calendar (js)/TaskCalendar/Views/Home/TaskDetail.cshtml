@@ -1,0 +1,42 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Task Detail</title>
+</head>
+<body>
+    <br />
+    <center>
+        <h2><u><b>Task Details</b></u></h2>
+        <b>Title: </b>@ViewBag.Task.Title
+        <br />
+        <b>Task Details: </b>@ViewBag.Task.TaskDetail
+        <br />
+        <b>Start Date: </b>@Convert.ToDateTime(ViewBag.Task.StartDate).ToString("MM/dd/yyyy")
+        <br />
+        <b>End Date: </b>@Convert.ToDateTime(ViewBag.Task.EndDate).ToString("MM/dd/yyyy")
+        <br />
+        <b>Priority: </b>@{ if (ViewBag.Task.Priority == 1) 
+                            {
+                                <span>High</span>
+                            }
+                            else if (ViewBag.Task.Priority == 2)
+                            {
+                                <span>Medium</span>
+                            }
+                            else
+                            {
+                                <span>Low</span>
+                            }
+                         }
+
+
+    </center>
+</body>
+</html>

@@ -1,0 +1,275 @@
+﻿@{
+    //Get the current claims principal
+    var identity = (System.Security.Claims.ClaimsPrincipal)System.Threading.Thread.CurrentPrincipal;
+    var id = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Sid)
+    .Select(c => c.Value).SingleOrDefault();
+    DataTablesApiPractice.Models.User user = new DataTablesApiPractice.BL.UserBL().GetUserbyId(Convert.ToInt32(id));
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    @RenderSection("head", required: false)
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href=@Url.Content("/Content/assets/css/icons/icomoon/styles.css") rel="stylesheet" type="text/css">
+    <link href=@Url.Content("/Content/assets/css/bootstrap.css") rel="stylesheet" type="text/css">
+    <link href=@Url.Content("/Content/assets/css/core.css") rel="stylesheet" type="text/css">
+    <link href=@Url.Content("/Content/assets/css/components.css") rel="stylesheet" type="text/css">
+    <link href=@Url.Content("/Content/assets/css/colors.css") rel="stylesheet" type="text/css">
+
+
+
+
+    
+    <!-- /global stylesheets -->
+    <!-- Core JS files -->
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/loaders/pace.min.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/core/libraries/jquery.min.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/core/libraries/bootstrap.min.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/loaders/blockui.min.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/ui/nicescroll.min.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/ui/drilldown.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/ui/fab.min.js")></script>
+    <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/visualization/d3/d3.min.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/visualization/d3/d3_tooltip.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/forms/styling/switchery.min.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/forms/styling/uniform.min.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/forms/selects/bootstrap_multiselect.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/ui/moment/moment.min.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/pickers/daterangepicker.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/forms/selects/select2.min.js")></script>
+
+
+    @*following libraries are used from Datatable Api with Export button*@
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/plugins/tables/datatables/datatables.min.js")></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script> @*Used to show export buttons*@
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"></script> @*This library is used to control columns visibility in Datatable*@
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script> @*This library is used for print table*@
+    @*above libraries are used from Datatable Api with Export button*@
+
+    
+    
+    
+    
+    
+    
+
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/core/app.js")></script>
+    <script type="text/javascript" src=@Url.Content("/Content/assets/js/pages/dashboard.js")></script>
+    <!-- /theme JS files -->
+
+</head>
+
+<body>
+
+    <!-- Page header -->
+    <div class="page-header page-header-inverse">
+
+        <!-- Main navbar -->
+        <div class="navbar navbar-inverse navbar-transparent">
+
+
+            <div class="navbar-collapse collapse" id="navbar-mobile">
+
+
+
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+
+
+
+
+                        <li class="dropdown dropdown-user">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+
+                                <span>@user.Name</span>
+                                <i class="caret"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="@Url.Action("MyProfile", "Admin")"><i class="icon-user-plus"></i> My profile</a></li>
+                                @{
+                                    int a = Convert.ToInt32(user.Id);
+                                }
+                                <li><a href="@Url.Action("EditTeacher", "Admin", new { id = a})"><i class="icon-cog5"></i> Account settings</a></li>
+                                <li><a href="@Url.Action("Logout", "Auth")"><i class="icon-switch2"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /main navbar -->
+        <!-- Page header content -->
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4>Admin Panel</h4>
+            </div>
+        </div>
+        <!-- /page header content -->
+        <!-- Second navbar -->
+        <div class="navbar navbar-inverse navbar-transparent" id="navbar-second">
+
+
+            <div class="navbar-collapse collapse" id="navbar-second-toggle">
+                <ul class="nav navbar-nav navbar-nav-material">
+
+                    <li class="active">
+                        <a href="@Url.Action("Index", "Home")">
+                            Homepage
+                        </a>
+                    </li>
+
+
+                    <li class="dropdown">
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Teacher <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu width-200">
+                            <li class="dropdown-header">
+                                Manage teachers
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("AddTeacher", "Admin")">
+                                    <i class="icon-user-tie"></i> Add New Teacher
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("GetTeacher", "Admin")">
+                                    <i class="glyphicon glyphicon-th-list"></i> View teacher  Record
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown">
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Student <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu width-200">
+                            <li class="dropdown-header">
+                                Manage Students
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("AddStudent", "Admin")">
+                                    <i class="glyphicon glyphicon-user"></i> Add New Student
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("GetStudent", "Admin")">
+                                    <i class="glyphicon glyphicon-th-list"></i> View Student Record
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="@Url.Action("ContactUs", "Home")">
+                            Contact Us
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+        <!-- /second navbar -->
+        <!-- Floating menu -->
+        <ul class="fab-menu fab-menu-top-right" data-fab-toggle="click">
+            <li>
+                <a class="fab-menu-btn btn bg-pink-300 btn-float btn-rounded btn-icon">
+                    <i class="fab-icon-open icon-plus3"></i>
+                    <i class="fab-icon-close icon-cross2"></i>
+                </a>
+
+                <ul class="fab-menu-inner">
+
+                    <li>
+                        <div data-fab-label="Add Teacher">
+                            <a href="@Url.Action("AddTeacher", "Admin")" class="btn btn-default btn-rounded btn-icon btn-float">
+                                <i class="icon-user-tie"></i>
+                            </a>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div data-fab-label="Add Student">
+                            <a href="@Url.Action("AddStudent", "Admin")" class="btn btn-default btn-rounded btn-icon btn-float">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+        <!-- /floating menu -->
+
+    </div>
+    <!-- /page header -->
+
+
+
+
+    <div class="page-container">
+        @RenderBody()
+    </div>
+
+
+    <!-- Footer -->
+    <div class="navbar navbar-default navbar-fixed-bottom footer">
+
+
+        <div class="navbar-collapse collapse" id="footer">
+
+
+            <div class="navbar-left">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("AboutUs", "Home")">About</a></li>
+                    <li><a href="@Url.Action("Terms", "Home")">Terms</a></li>
+                    <li><a href="@Url.Action("ContactUs", "Home")">Contact</a></li>
+                </ul>
+            </div>
+
+
+            <div class="heading-elements">
+                <ul class="heading-thumbnails pull-right">
+                    <li><a href="https://www.facebook.com/" target="_blank"><img src="~/Content/assets/images/brands/facebook.png" alt=""></a></li>
+                    <li><a href="https://twitter.com/login?lang=en" target="_blank"><img src="~/Content/assets/images/brands/twitter.png" alt=""></a></li>
+                    <li><a href="https://www.youtube.com/" target="_blank"><img src="~/Content/assets/images/brands/youtube.png" alt=""></a></li>
+                </ul>
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <!-- /footer -->
+
+
+</body>
+</html>

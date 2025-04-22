@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "AddStudent";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@using AdminPanel.Models
+
+<div class="row">
+    <form action="" method="post">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+
+                        <div class="text-left" style="display:@ViewBag.CssVal; position:absolute; background-color:deeppink; padding:5px;
+                                    color:white; font-weight:bold">
+                            All Fields are Required!!
+                        </div>
+
+                        <h5 class="panel-title" align="center"><u>New Student</u></h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label>First Name :</label>
+                            <input type="text" class="form-control" placeholder="ali" required name="fname" value="@ViewBag.fn">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Last Name :</label>
+                            <input type="text" class="form-control" placeholder="Ahmed" required name="lname" value="@ViewBag.ln">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Teacher :</label>
+                            <select class="form-control" required name="tid">
+                                <option value="">Select One</option>
+                                @foreach (Teacher t in ViewBag.tlist)
+                                {
+                                    <option value="@t.Id">@t.Fname @t.Lname</option>
+                                }
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Class :</label>
+                            <input type="number" class="form-control" placeholder="5" required name="clas" value="@ViewBag.cl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Address :</label>
+                            <br />
+                            <textarea required name="address" cols="156" rows="4" style="resize:none;">@ViewBag.ad</textarea>
+                        </div>
+
+
+                        <div class="text-left" style="display:@ViewBag.CssVal1; position:absolute; background-color:green; padding:5px;
+                                    color:white; font-weight:bold">
+                            Student Add Successfully!!
+                        </div>
+
+
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Add Teacher <i class="icon-database-insert position-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

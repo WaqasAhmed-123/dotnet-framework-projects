@@ -1,0 +1,51 @@
+﻿@using ExcelReadingAdvanced.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content m-10">
+
+    <div class="row m-10">
+        @if (ViewBag.UserList.Count > 0)
+        {
+        <a href="@Url.Action("DeleteAllUser", "Home")" class="btn btn-danger pull-left"><i class="icon-trash"></i> Clear All</a>
+        }
+        <a href="@Url.Action("DownloadDummyUserFile","Home", new { start = 2, end = 5001})" class="btn btn-success pull-right"><i class="icon-download"></i> Sample</a>
+    </div>
+    <center><h3><u>User List</u></h3></center>
+
+    <div style="color:@ViewBag.Color">@ViewBag.Message</div>
+    <div class="datatable-scroll table-bordered p-10" style="overflow:auto">
+        <table class="table no-footer table-responsive table-striped" id="userTable">
+            <thead class="bg-primary">
+                <tr>
+                    <th class="text-bold">
+                        ID
+                    </th>
+                    <th class="text-bold">
+                        Name
+                    </th>
+                    <th class="text-bold">
+                        Contact
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach(User u in ViewBag.UserList)
+                {
+                    <tr>
+                        <td>@u.Id</td>
+                        <td>@u.Name</td>
+                        <td>@u.Contact</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $('#userTable').DataTable();
+</script>

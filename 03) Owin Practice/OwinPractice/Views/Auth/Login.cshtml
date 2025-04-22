@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+
+    <div class="page-content" align="center">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <div style="position:relative; margin-left:0px; width:300px; background-color:deeppink;" align="center">
+                <h4>@ViewBag.ConfirmloginErrMsg</h4>
+            </div>
+
+            <!-- Simple login form -->
+            <form action="@Url.Action("PostLogin","Auth")" class="login-form" method="post">
+                <div class="panel panel-body">
+                    <div class="text-center">
+                        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                        <h5 class="content-group">Login to your account <small class="display-block">Enter your credentials below</small></h5>
+                    </div>
+                    <div class="form-group has-feedback has-feedback-left">
+                        <label class="">Email:</label>
+                        <input type="text" class="form-control" placeholder="waqas@gmail.com" required name="Email">
+                    </div>
+                    <br />
+
+                    <div class="form-group has-feedback has-feedback-left">
+                        <label>Password:</label>
+                        <input type="password" class="form-control" placeholder="waqas123" required name="Password">
+
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <button type="submit" class="btn bg-pink-400 btn-block">Sign in <i class="icon-circle-right2 position-right"></i></button>
+                    </div>
+                    <br />
+
+                </div>
+            </form>
+            <!-- /simple login form -->
+
+            <a href="@Url.Action("Registration","Auth")" style="background-color:silver; padding:5px; border:1px solid black; text-decoration:none;
+            color:white;">Signup</a>
+        </div>
+        <!-- /main content -->
+
+    </div>
+
+</body>
+</html>

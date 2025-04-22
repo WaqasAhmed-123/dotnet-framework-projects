@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReadingAdvanced", "ExcelReadingAdvanced\ExcelReadingAdvanced.csproj", "{357B3715-3AB9-43B7-B714-8CA472EA751F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{357B3715-3AB9-43B7-B714-8CA472EA751F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{357B3715-3AB9-43B7-B714-8CA472EA751F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{357B3715-3AB9-43B7-B714-8CA472EA751F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{357B3715-3AB9-43B7-B714-8CA472EA751F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B7AA5FA-6BA4-4A31-ADD5-0B25626119E7}
+	EndGlobalSection
+EndGlobal

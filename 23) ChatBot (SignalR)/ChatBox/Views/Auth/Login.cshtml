@@ -1,0 +1,63 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="col-lg-3" style="border:1px solid black; border-radius:5px; margin-top:90px; margin-left:35%">
+        <!-- Main content -->
+
+        <div style="color:red; text-decoration:underline" align="center">
+            <h4>@ViewBag.ConfirmloginErrMsg</h4>
+        </div>
+
+        <div class="content-wrapper">
+
+
+            <!-- Simple login form -->
+            <form action="@Url.Action("PostLogin","Auth")" class="login-form" method="post">
+                <div class="panel panel-body">
+                    <div class="text-center">
+                        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                        <h5 class="content-group">Login to your account</h5>
+                    </div>
+                    <div class="form-group">
+                        <label class="label pull-left">Email:</label>
+                        <input type="text" class="form-control" placeholder="Enter youe Email" required name="Email">
+                    </div>
+                    <br />
+
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" class="form-control" placeholder="Enter password" required name="Password">
+
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block btn-info">Sign in</button>
+                        <a href="@Url.Action("Registration","Auth")" class="btn btn-block btn-success">Sign Up</a>
+                    </div>
+                    <br />
+
+                </div>
+            </form>
+            <!-- /simple login form -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+
+    
+</body>
+</html>

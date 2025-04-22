@@ -1,0 +1,181 @@
+﻿@{
+    ViewBag.Title = "User Recording";
+}
+
+<center>
+
+    <br />
+    <button class="btn bg-primary" id="startBtn">Start</button>
+
+    <button class="btn btn-danger" id="stopBtn" disabled>Stop</button>
+
+    <br />
+    <a class="btn btn-info" id="dowLink" style="display:none; margin-top:10px;" download="Camera Recording (@DateTime.Now.Ticks)">Download</a>
+    <br />
+
+    <span id="Timer">--:--:--</span>
+
+</center>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    let recorder, stream;
+
+    async function startRecording()
+    {
+
+        try
+        {
+                
+            //used to record external media (mic + camera)
+                stream = await navigator.mediaDevices.getUserMedia(
+                {
+                audio: true,
+                video: true
+                });
+
+            recorder = new MediaRecorder(stream);
+
+            const chunks = [];
+            recorder.ondataavailable = e => chunks.push(e.data);
+
+            recorder.onstop = e =>
+            {
+                const completeBlob = new Blob(chunks, { type: chunks[0].type });
+
+                //converting blob into formdata to get this file at controller
+                var formdata = new FormData();
+                formdata.append('data', completeBlob);
+
+                $.ajax({
+                    type: 'POST',
+                    url: "../Home/SaveFile",
+                    data: formdata,
+                    contentType: false,
+                    processData: false,
+                    success: function (response)
+                    {
+                        if (response.IsSaved == 1)
+                        {
+                            $("#dowLink").show();
+                            $("#dowLink").attr("href", response.Link);
+                        }
+                        else
+                        {
+                            alert("File is Not Saved, Please download to save it.");
+
+                            $("#dowLink").show();
+                            $("#dowLink").attr("href", URL.createObjectURL(completeBlob));
+                        }
+
+                    },
+                    error: function ()
+                    {
+                        alert("ajax Failed, Please download to save file.");
+
+                        $("#dowLink").show();
+                        $("#dowLink").attr("href", URL.createObjectURL(completeBlob));
+                    }
+                });
+
+            };
+
+            recorder.start();
+
+            startCount();
+        }
+        catch
+        {
+            alert("Permission Denied");
+
+            $("#stopBtn").attr("disabled", true);
+            $("#startBtn").removeAttr("disabled");
+        }
+    }
+
+
+    //triggered when Start button clicked
+    $("#startBtn").click(function ()
+    {
+        //hiding the download button before starting new recording
+        $("#dowLink").hide();
+
+        $("#startBtn").attr("disabled", true);
+        $("#stopBtn").removeAttr("disabled");
+
+        startRecording();
+    });
+
+
+
+    //triggered when Stop button clicked
+    $("#stopBtn").click(function ()
+    {
+        $("#stopBtn").attr("disabled", true);
+        $("#startBtn").removeAttr("disabled");
+
+        recorder.stop();
+        stopCount();
+        stream.getVideoTracks()[0].stop();
+    });
+
+</script>
+
+
+<script>
+
+    var c = 0;
+    var t;
+    var timer_is_on = 0;
+
+    function timedCount()
+    {
+        $("#Timer").text(get_elapsed_time_string(c));
+        c = c + 1;
+        t = setTimeout(timedCount, 1000);
+    }
+
+    function startCount()
+    {
+        if (!timer_is_on)
+        {
+            timer_is_on = 1;
+            timedCount();
+        }
+    }
+
+    function stopCount()
+    {
+        clearTimeout(t);
+        timer_is_on = 0;
+    }
+
+
+    function get_elapsed_time_string(total_seconds)
+    {
+        function pretty_time_string(num) {
+            return (num < 10 ? "0" : "") + num;
+        }
+
+        var hours = Math.floor(total_seconds / 3600);
+        total_seconds = total_seconds % 3600;
+
+        var minutes = Math.floor(total_seconds / 60);
+        total_seconds = total_seconds % 60;
+
+        var seconds = Math.floor(total_seconds);
+
+        // Pad the minutes and seconds with leading zeros, if required
+        hours = pretty_time_string(hours);
+        minutes = pretty_time_string(minutes);
+        seconds = pretty_time_string(seconds);
+
+        // Compose the string for display
+        var currentTimeString = hours + ":" + minutes + ":" + seconds;
+
+        return currentTimeString;
+    }
+</script>
