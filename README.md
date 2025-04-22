@@ -7,7 +7,7 @@ Project Content folder is placed at main directory labelled as "0) content".
 ## About
 This repository contains a collection of ASP.NET MVC Framework learning projects, covering essential concepts like CRUD operations, authentication, real-time communication, payment integration, and file handling. Each project demonstrates a specific functionality useful for real-world applications.
 
-Key topics include **Entity Framework, jQuery, AJAX, OAuth, SignalR, third-party APIs (Stripe, Twilio, Google Maps), file handling (Excel, PDF), and SCORM integration. This repo serves as a reference for learning and mastering ASP.NET MVC**.
+Key topics include **Entity Framework, jQuery, AJAX, OAuth, SignalR, third-party APIs (Stripe, Twilio, Google Maps), file handling (Excel, PDF), and SCORM integration**. This repo serves as a reference for learning and mastering ASP.NET MVC.
 
 ## Projects Included
 
